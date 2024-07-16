@@ -1,0 +1,44 @@
+table {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+
+th {
+    position: relative;
+    padding: 10px;
+    height: 3.25rem;
+}
+
+td {
+    position: relative;
+}
+
+td>input {
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auto-adjust-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.logout-button {
+    float: left;
+    margin-right: 750px;
+}
+
+#my-date-input {
+    width: 15px;
+    font-size: 14px;
+}
+
+.employeecontainer {
+    max-width: 200px;
+    border-radius: 5px;
+}

@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from register.models import EmployeesWaitingForApproval
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
-#from site_base.views import homepage
+from site_base.views import homepage
 from django.core.mail import send_mail
 from register.forms import SingUpForm
 
@@ -69,8 +69,8 @@ def signin(request):
             login(request, user)
             fname= user.first_name
             my_var={'fname': fname}
-            #return homepage(request)
-            return render(request, "register/signin.html")
+            return homepage(request)
+            
 
         else:
             messages.error(request, "טעות בשם המשתמש או בסיסמא, אנא נסה שנית.")
