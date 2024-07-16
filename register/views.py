@@ -1,6 +1,5 @@
 from datetime import datetime
 from email import message
-import imp
 from multiprocessing import context
 from django.conf import settings
 from django.shortcuts import render, redirect
