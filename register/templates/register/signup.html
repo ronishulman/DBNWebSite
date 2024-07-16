@@ -1,0 +1,73 @@
+<!doctype html>
+<html dir="rtl" lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/signup.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="title">הרשמה</div>
+        <form action="/signup" method="post">
+            {% csrf_token %}
+
+            {% for message in messages %}
+            <div class="alert alert -{{message.tags }} alert-dismissible fade show" role="alert">
+                <strong>הודעה:</strong> {{message}}
+            </div>
+            {% endfor %}
+
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">שם משתמש</span>
+                    <input type="text" id="username" name="username" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">שם פרטי</span>
+                    <input type="text" id="fname" name="fname" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">שם משפחה</span>
+                    <input type="text" id="lname" name="lname" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">תעודת זהות</span>
+                    <input type="text" id="id" name="id" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">אימייל</span>
+                    <input type="text" id="email" name="email" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">פלאפון</span>
+                    <input type="text" id="cell_phone" name="cell_phone" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">סיסמא</span>
+                    <input type="password" id="pass1" name="pass1" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">אמת סיסמתך</span>
+                    <input type="password" id="pass2" name="pass2" placeholder="" required>
+                </div>
+                <div class="button">
+                    <input type="submit" value="הירשם" class="register-button">
+                    <button id="goBackButton" class="btn btn-secondary go-back-button">חזור</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    document.getElementById('goBackButton').addEventListener('click', function () {
+        window.history.back();
+    });
+</script>
+
+</html>
