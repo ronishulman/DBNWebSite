@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 #from employee.models import Employee
-#from register.models import EmployeesWaitingForApproval
+from register.models import EmployeesWaitingForApproval
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 #from site_base.views import homepage
@@ -45,8 +45,8 @@ def signup(request):
         
         #user = User.objects.create_user(username, _email, pass1)
         
-        #employee_info= EmployeesWaitingForApproval(user_name = username, first_name= fname, last_name= lname, id= _id,  email= _email, cell_phone= _cell_phone, pass1 = pass1, pass2 = pass2)
-        #employee_info.save()
+        employee_info= EmployeesWaitingForApproval(user_name = username, first_name= fname, last_name= lname, id= _id,  email= _email, cell_phone= _cell_phone, pass1 = pass1, pass2 = pass2)
+        employee_info.save()
 
         subject = 'רישום ממתין לאישור'
         message = 'החשבון שלך ממתין לאישור.'
