@@ -1,0 +1,177 @@
+<!doctype html>
+<html dir="rtl" lang="en">
+  {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'site_base/employeedetails.css' %}">
+  </head>
+
+<body>
+    
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <deleteButton class="navbar-toggler" type="deleteButton" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </deleteButton>
+    <a class="navbar-brand" href="/homepage">DBN</a>
+
+        <div class="collapse navbar-collapse"  id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if not user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/shift">מלא משמרת</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myshifts">המשמרות שלי</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">פרופיל</a>
+                </li>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employeesinfo">ניהול עובדים</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clientsinfo">ניהול לקוחות</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employeespermits">אישורי עובדים</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">התנתק</a>
+                </li>
+            </ul>
+        </div>
+  </nav>
+
+    {% csrf_token %}
+    <div class="card">
+      <div class="card-header">
+         פרטים אישיים
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">שם פרטי <strong style="margin-right: 20px">{{required_employee.first_name}}</strong></li>
+        <li class="list-group-item">שם משפחה <strong style="margin-right: 20px">{{required_employee.last_name}}</strong></li>
+        <li class="list-group-item">תעודת זהות <strong style="margin-right: 20px">{{required_employee.id}}</strong></li>
+        <li class="list-group-item">אימייל <strong style="margin-right: 20px">{{required_employee.email}}</strong></li>
+        <li class="list-group-item">פלאפון <strong style="margin-right: 20px">{{required_employee.cell_phone}}</strong></li>
+      </ul>
+    </div>
+    <br>
+    <div class="card">
+      <div class="card-header">
+          פרטי עבודה
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"> משכורת <strong style="margin-right: 20px">{{required_employee.salary}}</strong></li>
+        <li class="list-group-item">קילומטראז<strong style="margin-right: 20px">{{required_employee.total_km}}</strong></li>
+        <li class="list-group-item">תשלום על תחבורה ציבורית <strong style="margin-right: 20px">{{required_employee.total_transport}}</strong></li>
+        <li class="list-group-item">תשלום על אוכל <strong style="margin-right: 20px">{{required_employee.total_food}}</strong></li>
+        <li class="list-group-item">תשלום על חנייה <strong style="margin-right: 20px">{{required_employee.total_parking}}</strong></li>
+        <li class="list-group-item">שכר שעתי 
+          <strong style="margin-right: 20px">{{required_employee.hourly_wage}}</strong>
+          <button type="button" id="update-hourly-wage-btn" class="btn btn-primary" onclick="UpdateHourlyWage({{required_employee.id}})">עדכן</button>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <form method="POST" action="{% url 'employee_details-view' required_employee.id  %}" enctype ="multipart/form-data">
+      {% csrf_token %}
+      <input type="hidden" name="employee_id" value="{{ required_employee.id }}">
+      <div class="filtering">
+        <label for="month" class="form-label">חודש</label>
+          <select name="month" id="month">
+            <option id="month">1</option>
+            <option id="month">2</option>
+            <option id="month">3</option>
+            <option id="month">4</option>
+            <option id="month">5</option>
+            <option id="month">6</option>
+            <option id="month">7</option>
+            <option id="month">8</option>
+            <option id="month">9</option>
+            <option id="month">10</option>
+            <option id="month">11</option>
+            <option id="month">12</option>
+          </select>
+        <label for="year" class="form-label">שנה</label>
+          <select name="year" id="year">
+            <option id="year">2024</option>
+            <option id="year">2023</option>
+            <option id="year">2022</option>
+            <option id="year">2021</option>
+          </select>
+        <button type="submit" class="btn btn-success">סנן</button>
+      </div>
+    </form>
+    <br>
+      <table class="table table-success table-striped">
+        <thead>
+          <tr>
+            <th scope="col">תאריך התחלה</th>
+            <th scope="col">תאריך סיום</th>
+            <th scope="col">לקוח</th>
+            <th scope="col">מיקום</th>
+            <th scope="col">סוג משמרת</th>
+            <th scope="col">תשלום עבור המשמרת</th>
+            <th scope="col">שעת התחלה</th>
+            <th scope="col">שעת סוף</th>
+            <th scope="col">אורך משמרת</th>
+            <th scope="col">ק"מ</th>
+            <th scope="col">תחבורה ציבורית</th>
+            <th scope="col">אוכל</th>
+            <th scope="col">חנייה</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for shift in data %}
+            <tr>
+              <td>{{shift.shift_start_date_time|date:'j.n.Y'}}</td>
+              <td>{{shift.shift_end_date_time|date:'j.n.Y'}}</td>
+              <td>{{ shift.client}}</td>
+              <td>{{ shift.location}}</td>
+              <td>{{ shift.type_of_shift}}</td>
+              <td>{{ shift.shift_pay}}</td>
+              <td>{{shift.shift_start_date_time|time:'H:i'}}</td>
+              <td>{{shift.shift_end_date_time|time:'H:i'}}</td>
+              <td>{{ shift.length_of_the_shift}}</td>
+              <td>{{ shift.amount_of_km}}</td>
+              <td>{{ shift.public_transport}}</td>
+              <td>{{ shift.food}}</td>
+              <td>{{ shift.parking_refund}}</td>
+              <td></td>
+            </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </form>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+    function UpdateHourlyWage(employee_id){
+      var new_hourly_wage = prompt("אנא הכנס/י את השכר השעתי החדש");
+
+      $.ajax({
+        url: "{% url 'update_hourly_wage' %}",
+        type: 'POST',
+        data: {
+            'employee_id': employee_id,
+            'new_hourly_wage': new_hourly_wage,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function(response) {
+            alert("השכר עודכן בהצלחה.");
+        },
+        error: function(response) {
+            alert('Error occurred while updating hourly wage!');
+        }
+    });
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+
+</html>

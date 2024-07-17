@@ -1,0 +1,39 @@
+.card {
+    margin-top: 10px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn.btn-info {
+    margin-right: 800px;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+}
+
+
+
+/* BELLOW px (Phones) */
+@media (max-width :34em) {
+    .card {
+        margin-top: 1rem;
+        max-width: 100%;
+    }
+
+    .list-group-item {
+        width: 100%;
+        display: block;
+        font-size: 13px;
+    }
+
+    .btn.btn-info {
+        font-size: 12px;
+        margin-right: 90px;
+    }
+}
