@@ -1,5 +1,4 @@
 
-import pytz
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.conf import settings
@@ -23,7 +22,6 @@ from site_base.views import homepage
 from .forms import ShiftFillingForm, ShiftUpdateForm
 from site_base.views import my_shifts
 
-tz = pytz.timezone('Israel')
 
 # This function returns the shift page
 @login_required
