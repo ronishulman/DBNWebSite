@@ -62,21 +62,22 @@ def signin(request):
     if request.method== "POST":
         username= request.POST['username']
         pass1= request.POST['pass1']
+        return homepage(request)
 
-        user=authenticate(username= username, password= pass1)
+    #     user=authenticate(username= username, password= pass1)
 
-        if user is not None:
-            login(request, user)
-            fname= user.first_name
-            my_var={'fname': fname}
-            return homepage(request)
+    #     if user is not None:
+    #         login(request, user)
+    #         fname= user.first_name
+    #         my_var={'fname': fname}
+    #         return homepage(request)
             
 
-        else:
-            messages.error(request, "טעות בשם המשתמש או בסיסמא, אנא נסה שנית.")
-            return render(request, "register/signin.html")
+    #     else:
+    #         messages.error(request, "טעות בשם המשתמש או בסיסמא, אנא נסה שנית.")
+    #         return render(request, "register/signin.html")
 
-    return render(request, "register/signin.html")
+    # return render(request, "register/signin.html")
 
 
 def signout(request):
