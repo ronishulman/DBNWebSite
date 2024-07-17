@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
+    'employee.apps.EmployeeConfig',
+    'shift.apps.ShiftConfig',
+    'clients.apps.ClientsConfig',
+    'site_base.apps.SiteBaseConfig',
 ]
 
 MIDDLEWARE = [
