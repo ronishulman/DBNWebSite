@@ -44,16 +44,16 @@ def signup(request):
             return redirect('signup')
         
         #user = User.objects.create_user(username, _email, pass1)
-        
+        print("before save")
         employee_info= EmployeesWaitingForApproval(user_name = username, first_name= fname, last_name= lname, id= _id,  email= _email, cell_phone= _cell_phone, pass1 = pass1, pass2 = pass2)
         employee_info.save()
-
+        print("after save")
         subject = 'רישום ממתין לאישור'
         message = 'החשבון שלך ממתין לאישור.'
         from_email = settings.EMAIL_HOST_USER
         recipient_list = [_email]
         send_mail(subject, message, from_email, recipient_list)
-
+        print("after send mail")
         return render(request, "register/signin.html")
 
     return render(request, "register/signup.html")
@@ -63,7 +63,7 @@ def signin(request):
     if request.method== "POST":
         username= request.POST['username']
         pass1= request.POST['pass1']
-        
+
         user=authenticate(username= username, password= pass1)
 
         if user is not None:
