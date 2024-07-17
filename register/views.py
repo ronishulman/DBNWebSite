@@ -64,7 +64,7 @@ def signin(request):
         pass1= request.POST['pass1']
         return homepage(request)
     
-    return homepage(request)
+    return render(request, "register/signin.html")
     #     user=authenticate(username= username, password= pass1)
 
     #     if user is not None:
