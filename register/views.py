@@ -59,6 +59,7 @@ def signup(request):
     return render(request, "register/signup.html")
 
 def signin(request):
+    print("This is a debug message.")
     if request.method== "POST":
         username= request.POST['username']
         pass1= request.POST['pass1']
@@ -79,7 +80,6 @@ def signin(request):
     #         return render(request, "register/signin.html")
 
     # return render(request, "register/signin.html")
-
 
 def signout(request):
     logout(request)
