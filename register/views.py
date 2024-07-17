@@ -65,7 +65,7 @@ def signin(request):
         username= request.POST['username']
         pass1= request.POST['pass1']
         print("failed")
-        return render(request, "register/signup.html")
+        return render(request, "site_base/homepage.html")
     
     return render(request, "register/signin.html")
     #     user=authenticate(username= username, password= pass1)
