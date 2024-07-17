@@ -48,11 +48,11 @@ def signup(request):
         employee_info= EmployeesWaitingForApproval(user_name = username, first_name= fname, last_name= lname, id= _id,  email= _email, cell_phone= _cell_phone, pass1 = pass1, pass2 = pass2)
         employee_info.save()
         print("after save")
-        subject = 'רישום ממתין לאישור'
-        message = 'החשבון שלך ממתין לאישור.'
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = [_email]
-        send_mail(subject, message, from_email, recipient_list)
+        # subject = 'רישום ממתין לאישור'
+        # message = 'החשבון שלך ממתין לאישור.'
+        # from_email = settings.EMAIL_HOST_USER
+        # recipient_list = [_email]
+        # send_mail(subject, message, from_email, recipient_list)
         print("after send mail")
         return render(request, "register/signin.html")
 
