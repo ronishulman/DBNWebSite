@@ -61,8 +61,10 @@ def signup(request):
 def signin(request):
     print("This is a debug message.")
     if request.method== "POST":
+        print("בתוך הפונקצייה")
         username= request.POST['username']
         pass1= request.POST['pass1']
+        print("failed")
         return homepage(request)
     
     return render(request, "register/signin.html")
