@@ -1,0 +1,154 @@
+<!doctype html>
+<html dir="rtl" lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'shift/shift.css' %}">
+    <link rel="stylesheet" href="{% static 'shift/queries.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <deleteButton class="navbar-toggler" type="deleteButton" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </deleteButton>
+        <a class="navbar-brand" href="/homepage">DBN</a>
+    
+            <div class="collapse navbar-collapse"  id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    {% if not user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shift">מלא משמרת</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/myshifts">המשמרות שלי</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">פרופיל</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/employeesinfo">ניהול עובדים</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/clientsinfo">ניהול לקוחות</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/employeespermits">אישורי עובדים</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">התנתק</a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
+
+
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert alert -{{message.tags }} alert-dismissible fade show" role="alert">
+        <strong>הודעה:</strong> {{message}}
+        </div>
+        {% endfor %}
+        <header> פרטי משמרת</header>
+        <h7>הערה: שנה רק את הפרטים אשר אותם אתה מעוניין לעדכן (את יתר הפרטים השאר כפי שהיו). </h7>
+        <form id="shiftform" method="POST" action="{% url 'updateshift-view' shift.shift_id  %}" enctype ="multipart/form-data">
+            {% csrf_token %}
+            <div class="fields">
+               <div class="input-field">
+                    <label>תאריך תחילת משמרת </label>
+                    <input type="text" id="my-date-input" name="shift_start_date" onfocus="(this.type='date')" placeholder ={{ shift.shift_start_date_time|date:'j.n.Y' }}>
+               </div>
+               <div class="input-field">
+                    <label> תאריך סוף משמרת</label>
+                    <input type="text" id="my-date-input" name="shift_end_date" onfocus="(this.type='date')" placeholder ={{ shift.shift_end_date_time|date:'j.n.Y' }}>
+              </div>
+               <div class="input-field">
+                    <label>שעת התחלה</label>
+                    <input type="text" id="my-time-input" name="shift_start_time" onfocus="(this.type='time')" placeholder ={{shift.shift_start_date_time|time:'H:i'}}>
+               </div>
+               <div class="input-field">
+                    <label>שעת סוף</label>
+                    <input type="text" id="my-time-input" onfocus="(this.type='time')" name="shift_end_time" placeholder ={{shift.shift_end_date_time|time:'H:i'}}>
+               </div>
+               <div class="input-field">
+                    <label>אורכה של המשמרת(שע')</label>
+                    <input type="text" id="my-time-input" name="shift_length" onfocus="(this.type='time')" placeholder ={{shift.length_of_the_shift|floatformat:"3"}}>
+               </div>
+               <div class="input-field">
+                    <label for="client"> שם הלקוח</label>
+                    <select name="client" id="client">
+                        <option selected>{{shift.client}}</option>
+                        {% for client in clients %}
+                        <option value="{{ client.name }}">{{ client.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+               <div class="input-field">
+                    <label for="typeofwork"> סוג עבודה</label>
+                    <select name="typeofwork" id="typeofwork">
+                        <option id="construct" value="current_typeofwork" disabled selected>{{shift.type_of_shift}}</option>
+                        <option id="construct" value="הקמה">הקמה</option>
+                        <option id="disassembly" value="פירוק">פירוק</option>
+                        <option id="disassembly" value="פירוק + פריקה במחסן">פירוק + פריקה במחסן</option>
+                        <option id="disassembly" value="נציגות">נציגות</option>
+                        <option id="disassembly" value="ראש צוות">ראש צוות</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label>מיקום</label>
+                    <input type="text" id="location" name="location" placeholder="{{shift.location}}">
+                </div>
+                <div class="input-field">
+                    <label>קילומטראז</label>
+                    <input type="text" id="km" name="km" placeholder={{shift.amount_of_km}}>
+                </div>
+                <div class="input-field">
+                    <label>תחבורה ציבורית</label>
+                    <input type="text" id="transport" name="transport" placeholder={{shift.public_transport}}>
+                </div>
+                <div class="input-field">
+                    <label>אוכל</label>
+                    <input type="text" id="food" name="food" placeholder={{shift.food}}>
+                </div>
+                <div class="input-field">
+                    <label>תשלום עבור חנייה</label>
+                    <input type="text" id="parking_refund" name="parking_refund" placeholder={{shift.parking_refund}}>
+                </div>
+                <div class="input-field">
+                    <label>קבלה של חנייה</label>
+                    <input type="file" name="upload" accept="image/*">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">עדכן</button>
+            <button type="button" class="btn btn-danger" onclick="DeleteShift()">מחק משמרת</button>
+        </form>
+    </div>
+  </body>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script>
+    function DeleteShift(){ 
+        $.ajax({
+            url: "{% url 'deleteshift-view' shift.shift_id %}",
+            type: 'GET',
+            data:{},
+            cache: false,
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message); // display success message
+                } else {
+                    alert('An error occurred.'); // display error message
+                }
+            },
+        });
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous" type="text/javascript"></script>   
+</html>
