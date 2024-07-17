@@ -18,7 +18,7 @@ class Shift(models.Model):
     food= models.FloatField(max_length=30, null=True,blank=True, default=0)
     shift_pay = models.FloatField(max_length=30, null=True, default=0)
     parking_refund = models.FloatField(max_length=30, null= True, blank=True, default=0)
-    parking_receipt = models.ImageField(null=True, blank=True, upload_to="images/")
+    #parking_receipt = models.ImageField(null=True, blank=True, upload_to="images/")
 
 class TempShift(models.Model):
     pass
