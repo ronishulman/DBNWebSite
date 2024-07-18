@@ -42,7 +42,6 @@ def profile_page(request):
 def sign_in_page(request):
     return render(request,"register/signin.html")
 #this function returns a page that displays for the logged in user his shifts
-
 @login_required
 def my_shifts(request):
     user = request.user
@@ -182,11 +181,11 @@ def employees_permits(request):
 
         employee_to_aprove.delete()
 
-        subject = '.רישומך אושר'
-        message = 'החשבון שלך אושר. בהצלחה!'
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = [employee_to_aprove.email]
-        send_mail(subject, message, from_email, recipient_list)
+        # subject = '.רישומך אושר'
+        # message = 'החשבון שלך אושר. בהצלחה!'
+        # from_email = settings.EMAIL_HOST_USER
+        # recipient_list = [employee_to_aprove.email]
+        # send_mail(subject, message, from_email, recipient_list)
 
         employees_waiting_for_permits = EmployeesWaitingForApproval.objects.all()
         context = {'employees': employees_waiting_for_permits, 'user': user}
