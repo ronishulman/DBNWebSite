@@ -45,7 +45,17 @@ def shift_page(request):
 @login_required
 def update_shift(request , id):
     shift = Shift.objects.get(pk=id)
-    initial_data = {'amount_of_km': None, 'public_transport': None, 'food': None, 'parking_refund': None}
+    initial_data = {}  # Initialize empty dictionary for initial data
+        
+        # Check if database values are None and update initial_data
+    if shift.amount_of_km is None:
+        initial_data['amount_of_km'] = None
+    if shift.public_transport is None:
+        initial_data['public_transport'] = None
+    if shift.food is None:
+        initial_data['food'] = None
+    if shift.parking_refund is None:
+        initial_data['parking_refund'] = None
     form = ShiftUpdateForm(request.POST or None, instance=shift, initial=initial_data)
 
     if form.is_valid():
