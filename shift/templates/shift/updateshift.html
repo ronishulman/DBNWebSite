@@ -9,11 +9,18 @@
     <link rel="stylesheet" href="{% static 'shift/shift.css' %}">
 
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
         .card {
             border: 2px solid #000;
             border-radius: 10px;
             padding: 10px; /* Reduce the padding to make the card smaller */
-            margin: 10px; /* Add margin around the card */
             max-width: 400px; /* Set a maximum width for the card */
         }
 
@@ -24,7 +31,7 @@
             }
         }
     </style>
-    
+
 </head>
 
 <body>
