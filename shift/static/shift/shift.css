@@ -9,7 +9,10 @@
 }
 
 .form-control {
-    width: 100%;
+    width: calc(100% - 20px);
+    /* Adjust the width of form fields */
+    padding: 5px;
+    /* Add padding to form fields */
     margin-bottom: 10px;
 }
 
@@ -23,5 +26,14 @@
     .form-control {
         width: 100%;
         /* Make elements full width on smaller screens */
+    }
+
+    select,
+    input[type="text"] {
+        width: calc(100% - 20px);
+        /* Adjust the width of select and text input fields */
+        padding: 5px;
+        /* Add padding to select and text input fields */
+        margin-bottom: 10px;
     }
 }
