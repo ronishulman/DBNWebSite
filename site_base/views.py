@@ -220,21 +220,7 @@ def calulate_salary(request):
 @login_required
 def edit_profile(request):
     logged_in_user = Employee.objects.get(id = request.user.id)
-    # salary = 0
-    # payment_for_fuel_refunds = 0
-    # payment_for_food_refunds = 0
-    # payment_for_public_transport_refunds = 0
-    # payment_for_parking_refunds = 0
-    # connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
-    # for shift in connected_user_shifts:
-    #     salary += shift.shift_pay
-    #     payment_for_fuel_refunds += shift.amount_of_km
-    #     payment_for_parking_refunds += shift.parking_refund
-    #     payment_for_public_transport_refunds += shift.public_transport
-    #     payment_for_food_refunds += shift.food
-
-    # context = {'salary': salary , 'payment_for_fuel_refunds': payment_for_fuel_refunds, 'payment_for_public_transport_refunds': payment_for_public_transport_refunds, 'payment_for_food_refunds': payment_for_food_refunds, 'payment_for_parking_refunds': payment_for_parking_refunds, 'user': logged_in_user}
-
+ 
     if request.method == "POST":
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -269,7 +255,7 @@ def edit_profile(request):
         # return render(request, 'site_base/profile.html', updated_context)
         return profile_page(request)
 
-    return render(request, 'site_base/editprofile.html')
+    return render(request, 'site_base/editprofile.html', {'logged_in_user': logged_in_user})
 @login_required
 def log_out(request):
     logout(request)
