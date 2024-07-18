@@ -1,5 +1,12 @@
 .card {
     margin-top: 10px;
+    margin-bottom: 20px;
+    /* Space between the cards */
+}
+
+.navbar {
+    margin-bottom: 20px;
+    /* Space below the navbar */
 }
 
 .card-header {
