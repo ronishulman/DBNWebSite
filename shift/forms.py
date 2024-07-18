@@ -62,7 +62,7 @@ class ShiftUpdateForm(ModelForm):
    
     class Meta:
         model = Shift
-        fields = ['type_of_shift', 'client', 'shift_start_date_time', 'shift_end_date_time', 'location', 'amount_of_km', 'public_transport', 'food', 'parking_refund']
+        fields = ['client', 'type_of_shift', 'shift_start_date_time', 'shift_end_date_time', 'location', 'amount_of_km', 'public_transport', 'food', 'parking_refund']
 
         labels = {
             'client': 'לקוח',
