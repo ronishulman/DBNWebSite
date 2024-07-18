@@ -45,10 +45,9 @@ def shift_page(request):
 @login_required
 def update_shift(request , id):
     shift = Shift.objects.get(pk=id)
-    #form = ShiftUpdateForm(request.POST or None, instance=shift)
     initial_data = {'amount_of_km': None, 'public_transport': None, 'food': None, 'parking_refund': None}
     form = ShiftUpdateForm(request.POST or None, instance=shift, initial=initial_data)
-    
+
     if form.is_valid():
         logged_in_user= Employee.objects.get(id = request.user.id)
     

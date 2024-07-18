@@ -65,10 +65,10 @@ class ShiftUpdateForm(ModelForm):
         fields = ['shift_start_date_time', 'shift_end_date_time', 'type_of_shift', 'client', 'location', 'amount_of_km', 'public_transport', 'food', 'parking_refund']
 
         labels = {
-            'shift_start_date_time': 'תאריך ושעת תחילת משמרת',
-            'shift_end_date_time': 'תאריך ושעת סוף משמרת',
             'client': 'לקוח',
             'type_of_shift': 'סוג משמרת',
+            'shift_start_date_time': 'תאריך ושעת תחילת משמרת',
+            'shift_end_date_time': 'תאריך ושעת סוף משמרת',
             'location': 'מיקום',
             'amount_of_km': 'כמות קילומטרים',
             'public_transport': 'תחבורה ציבורית',
