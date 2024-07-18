@@ -2,13 +2,15 @@
     border: 2px solid #000;
     border-radius: 10px;
     padding: 20px;
-}
-
-.full-width {
-    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
 }
 
 .form-control {
     width: 100%;
     margin-bottom: 10px;
+}
+
+.btn-submit {
+    width: 100%;
 }

@@ -38,17 +38,9 @@ class ShiftFillingForm(ModelForm):
             'client': 'לקוח',
             'type_of_shift': 'סוג משמרת',
             'location': 'מיקום',
-            'amount_of_km': 'כמות קילומטרים',
-            'public_transport': 'תחבורה ציבורית',
-            'food': 'אוכל',
-            'parking_refund': 'החזר חניה',
         }
         widgets = {
                 'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'מיקום', 'required': False}),
-                'amount_of_km': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-                'public_transport': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-                'food': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-                'parking_refund': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
         }
 
 class ShiftUpdateForm(ModelForm):
