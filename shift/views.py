@@ -47,15 +47,27 @@ def update_shift(request , id):
     shift = Shift.objects.get(pk=id)
     initial_data = {}  # Initialize empty dictionary for initial data
         
-        # Check if database values are None and update initial_data
-    if shift.amount_of_km is None:
+    # Check if database values are None or 0.0 and update initial_data
+    if shift.amount_of_km is None or shift.amount_of_km == 0.0:
         initial_data['amount_of_km'] = None
-    if shift.public_transport is None:
+    else:
+        initial_data['amount_of_km'] = shift.amount_of_km
+    
+    if shift.public_transport is None or shift.public_transport == 0.0:
         initial_data['public_transport'] = None
-    if shift.food is None:
+    else:
+        initial_data['public_transport'] = shift.public_transport
+    
+    if shift.food is None or shift.food == 0.0:
         initial_data['food'] = None
-    if shift.parking_refund is None:
+    else:
+        initial_data['food'] = shift.food
+    
+    if shift.parking_refund is None or shift.parking_refund == 0.0:
         initial_data['parking_refund'] = None
+    else:
+        initial_data['parking_refund'] = shift.parking_refund
+
     form = ShiftUpdateForm(request.POST or None, instance=shift, initial=initial_data)
 
     if form.is_valid():
