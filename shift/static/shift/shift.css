@@ -2,8 +2,6 @@
     border: 2px solid #000;
     border-radius: 10px;
     padding: 20px;
-    background-color: red;
-    /* Change background color to red */
 }
 
 .full-width {
@@ -13,4 +11,17 @@
 .form-control {
     width: 100%;
     margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        padding: 10px;
+        /* Adjust padding for smaller screens */
+    }
+
+    .full-width,
+    .form-control {
+        width: 100%;
+        /* Make elements full width on smaller screens */
+    }
 }
