@@ -9,14 +9,6 @@
     <link rel="stylesheet" href="{% static 'shift/shift.css' %}">
 
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
         .card {
             border: 2px solid #000;
             border-radius: 10px;
@@ -71,36 +63,35 @@
                   </li>
               </ul>
           </div>
-      </nav>
-
-    <div class="card">
-        <center>
-            <h1>עדכן משמרת</h1>
-            {% for message in messages %}
-            <div class="alert alert -{{message.tags }} alert-dismissible fade show" role="alert">
-                <strong>הודעה:</strong> {{message}}
-            </div>
-            {% endfor %}
-            <form action="" method="POST">
-                {%csrf_token%}
-                {{form.as_p}}
-                <input type="submit" value="עדכן" class="btn btn-secondary" style="width: 150px; margin: 5px;">
-                <br>
-                <br>
-            </form>
-            {% if shift.shift_end_date_time is None %}
-                <form action="{% url 'endshift-view' shift.shift_id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-warning" style="width: 150px; margin: 5px;">סיים משמרת</button>
+    </nav>
+    <center>  
+        <div class="card">
+                <h1>עדכן משמרת</h1>
+                {% for message in messages %}
+                <div class="alert alert -{{message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>הודעה:</strong> {{message}}
+                </div>
+                {% endfor %}
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <input type="submit" value="עדכן" class="btn btn-secondary" style="width: 150px; margin: 5px;">
+                    <br>
+                    <br>
                 </form>
-            {%endif%}
-            <form action="{% url 'deleteshift-view' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="shift_id" value="{{ shift_id }}">
-                <input type="submit" value="מחק משמרת" class="btn btn-danger" style="width: 150px; margin: 5px;">
-            </form>
-        </center>
-    </div>
+                {% if shift.shift_end_date_time is None %}
+                    <form action="{% url 'endshift-view' shift.shift_id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-warning" style="width: 150px; margin: 5px;">סיים משמרת</button>
+                    </form>
+                {%endif%}
+                <form action="{% url 'deleteshift-view' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="shift_id" value="{{ shift_id }}">
+                    <input type="submit" value="מחק משמרת" class="btn btn-danger" style="width: 150px; margin: 5px;">
+                </form>
+        </div>
+    <center/>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
