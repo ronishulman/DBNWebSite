@@ -309,11 +309,16 @@ def calculate_employees_details(employee):
     employee.salary = 0
 
     for shift in employees_shifts:
-        employee.total_km += shift.amount_of_km
-        employee.total_food += shift.food
-        employee.total_transport += shift.public_transport
-        employee.total_parking += shift.parking_refund
-        employee.salary += shift.shift_pay
+        if shift.amount_of_km is not None:
+            employee.total_km += shift.amount_of_km
+        if shift.food is not None:
+            employee.total_food += shift.food
+        if shift.public_transport is not None:
+            employee.total_transport += shift.public_transport
+        if shift.parking_refund is not None:
+            employee.total_parking += shift.parking_refund
+        if shift.shift_pay is not None:
+            employee.salary += shift.shift_pay
     
     employee.save()
     return
