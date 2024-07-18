@@ -54,13 +54,12 @@
               <th>
                 שם
               </th>
-
               <th>
                 <form action="addclient" id="button-wrapper" method="POST">
                   {% csrf_token %}
                   <div class="button-wrapper" id="button-wrapper">
-                    <button id="addClientButton" type="submit" class="btn btn-info">הוסף לקוח</button>
                     <input id="clientInput" type="text" name="client_name" required>
+                    <button id="addClientButton" type="submit" class="btn btn-info">הוסף לקוח</button>
                   <div>
                 </form>
               </th>
