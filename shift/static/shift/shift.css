@@ -2,6 +2,8 @@
     border: 2px solid #000;
     border-radius: 10px;
     padding: 20px;
+    background-color: red;
+    /* Change background color to red */
 }
 
 .full-width {
