@@ -9,20 +9,21 @@
     <link rel="stylesheet" href="{% static 'shift/shift.css' %}">
 
     <style>
+        .navbar {
+            margin-bottom: 20px; /* Add margin below the navbar */
+        }
+        
         .card {
             border: 2px solid #000;
             border-radius: 10px;
             padding: 10px; /* Reduce the padding to make the card smaller */
             max-width: 400px; /* Set a maximum width for the card */
-            max-height: 300px; /* Set a maximum height for the card */
-            overflow: auto; /* Add scrollbars if content exceeds the card height */
         }
 
         @media only screen and (max-width: 600px) {
             .card {
                 padding: 5px; /* Adjust padding for smaller screens */
                 max-width: 300px; /* Adjust maximum width for smaller screens */
-                max-height: 200px; /* Adjust maximum height for smaller screens */
             }
         }
     </style>
