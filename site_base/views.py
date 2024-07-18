@@ -220,20 +220,20 @@ def calulate_salary(request):
 @login_required
 def edit_profile(request):
     logged_in_user = Employee.objects.get(id = request.user.id)
-    salary = 0
-    payment_for_fuel_refunds = 0
-    payment_for_food_refunds = 0
-    payment_for_public_transport_refunds = 0
-    payment_for_parking_refunds = 0
-    connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
-    for shift in connected_user_shifts:
-        salary += shift.shift_pay
-        payment_for_fuel_refunds += shift.amount_of_km
-        payment_for_parking_refunds += shift.parking_refund
-        payment_for_public_transport_refunds += shift.public_transport
-        payment_for_food_refunds += shift.food
+    # salary = 0
+    # payment_for_fuel_refunds = 0
+    # payment_for_food_refunds = 0
+    # payment_for_public_transport_refunds = 0
+    # payment_for_parking_refunds = 0
+    # connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
+    # for shift in connected_user_shifts:
+    #     salary += shift.shift_pay
+    #     payment_for_fuel_refunds += shift.amount_of_km
+    #     payment_for_parking_refunds += shift.parking_refund
+    #     payment_for_public_transport_refunds += shift.public_transport
+    #     payment_for_food_refunds += shift.food
 
-    context = {'salary': salary , 'payment_for_fuel_refunds': payment_for_fuel_refunds, 'payment_for_public_transport_refunds': payment_for_public_transport_refunds, 'payment_for_food_refunds': payment_for_food_refunds, 'payment_for_parking_refunds': payment_for_parking_refunds, 'user': logged_in_user}
+    # context = {'salary': salary , 'payment_for_fuel_refunds': payment_for_fuel_refunds, 'payment_for_public_transport_refunds': payment_for_public_transport_refunds, 'payment_for_food_refunds': payment_for_food_refunds, 'payment_for_parking_refunds': payment_for_parking_refunds, 'user': logged_in_user}
 
     if request.method == "POST":
         first_name = request.POST.get('first_name')
@@ -264,11 +264,12 @@ def edit_profile(request):
         logged_in_user = Employee(id = logged_in_user.id, first_name = updated_first_name , last_name = updated_last_name, email = updated_email, cell_phone = updated_cell_phone)
         logged_in_user.save()
 
-        logged_in_user = Employee.objects.get(id = request.user.id)
-        updated_context = {'salary': salary , 'payment_for_fuel_refunds': payment_for_fuel_refunds, 'payment_for_public_transport_refunds': payment_for_public_transport_refunds, 'payment_for_food_refunds': payment_for_food_refunds, 'payment_for_parking_refunds': payment_for_parking_refunds, 'user': logged_in_user}
-        return render(request, 'site_base/profile.html', updated_context)
+        # logged_in_user = Employee.objects.get(id = request.user.id)
+        # updated_context = {'salary': salary , 'payment_for_fuel_refunds': payment_for_fuel_refunds, 'payment_for_public_transport_refunds': payment_for_public_transport_refunds, 'payment_for_food_refunds': payment_for_food_refunds, 'payment_for_parking_refunds': payment_for_parking_refunds, 'user': logged_in_user}
+        # return render(request, 'site_base/profile.html', updated_context)
+        return profile_page(request)
 
-    return render(request, 'site_base/editprofile.html', context)
+    return render(request, 'site_base/editprofile.html')
 @login_required
 def log_out(request):
     logout(request)
