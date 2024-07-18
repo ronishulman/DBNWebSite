@@ -77,9 +77,10 @@ class ShiftUpdateForm(ModelForm):
         }
         widgets = {
                 'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'מיקום'}),
-                # 'client': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'לקוח'}),
-                'shift_start_date_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-                'shift_end_date_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+                # 'shift_start_date_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+                # 'shift_end_date_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+                'shift_start_date_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+                'shift_end_date_time': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
         }
 
         
