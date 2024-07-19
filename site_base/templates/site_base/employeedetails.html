@@ -66,11 +66,11 @@
           פרטי עבודה
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"> משכורת <strong style="margin-right: 20px">{{required_employee.salary}}</strong></li>
-        <li class="list-group-item">קילומטראז<strong style="margin-right: 20px">{{required_employee.total_km}}</strong></li>
-        <li class="list-group-item">תשלום על תחבורה ציבורית <strong style="margin-right: 20px">{{required_employee.total_transport}}</strong></li>
-        <li class="list-group-item">תשלום על אוכל <strong style="margin-right: 20px">{{required_employee.total_food}}</strong></li>
-        <li class="list-group-item">תשלום על חנייה <strong style="margin-right: 20px">{{required_employee.total_parking}}</strong></li>
+        <li class="list-group-item"> משכורת <strong style="margin-right: 20px">{{ required_employee.salary|floatformat:2 }}</strong></li>
+        <li class="list-group-item">קילומטראז<strong style="margin-right: 20px">{{required_employee.total_km|floatformat:2}}</strong></li>
+        <li class="list-group-item">תשלום על תחבורה ציבורית <strong style="margin-right: 20px">{{required_employee.total_transport|floatformat:2}}</strong></li>
+        <li class="list-group-item">תשלום על אוכל <strong style="margin-right: 20px">{{required_employee.total_food|floatformat:2}}</strong></li>
+        <li class="list-group-item">תשלום על חנייה <strong style="margin-right: 20px">{{required_employee.total_parking|floatformat:2}}</strong></li>
         <li class="list-group-item">שכר שעתי 
           <strong style="margin-right: 20px">{{required_employee.hourly_wage}}</strong>
           <button type="button" id="update-hourly-wage-btn" class="btn btn-primary" onclick="UpdateHourlyWage({{required_employee.id}})">עדכן</button>
@@ -134,7 +134,7 @@
               <td>{{ shift.client}}</td>
               <td>{{ shift.location}}</td>
               <td>{{ shift.type_of_shift}}</td>
-              <td>{{ shift.shift_pay}}</td>
+              <td>{{ shift.shift_pay|floatformat:2}}</td>
               <td>{{shift.shift_start_date_time|time:'H:i'}}</td>
               <td>{{shift.shift_end_date_time|time:'H:i'}}</td>
               <td>{{ shift.length_of_the_shift}}</td>
