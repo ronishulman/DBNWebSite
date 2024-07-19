@@ -58,6 +58,10 @@
         <li class="list-group-item">תעודת זהות <strong style="margin-right: 20px">{{required_employee.id}}</strong></li>
         <li class="list-group-item">אימייל <strong style="margin-right: 20px">{{required_employee.email}}</strong></li>
         <li class="list-group-item">פלאפון <strong style="margin-right: 20px">{{required_employee.cell_phone}}</strong></li>
+        <li class="list-group-item">שכר שעתי 
+          <strong style="margin-right: 20px">{{required_employee.hourly_wage}}</strong>
+          <button type="button" id="update-hourly-wage-btn" class="btn btn-primary" onclick="UpdateHourlyWage({{required_employee.id}})">עדכן</button>
+        </li>
       </ul>
     </div>
     <br>
@@ -71,10 +75,6 @@
         <li class="list-group-item">תשלום על תחבורה ציבורית <strong style="margin-right: 20px">{{required_employee.total_transport|floatformat:2}}</strong></li>
         <li class="list-group-item">תשלום על אוכל <strong style="margin-right: 20px">{{required_employee.total_food|floatformat:2}}</strong></li>
         <li class="list-group-item">תשלום על חנייה <strong style="margin-right: 20px">{{required_employee.total_parking|floatformat:2}}</strong></li>
-        <li class="list-group-item">שכר שעתי 
-          <strong style="margin-right: 20px">{{required_employee.hourly_wage}}</strong>
-          <button type="button" id="update-hourly-wage-btn" class="btn btn-primary" onclick="UpdateHourlyWage({{required_employee.id}})">עדכן</button>
-        </li>
       </ul>
     </div>
     <br>
