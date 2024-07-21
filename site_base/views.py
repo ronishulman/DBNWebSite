@@ -149,7 +149,7 @@ def employee_details(request, id):
     user = request.user
     required_employee = Employee.objects.get(id = id)
     connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
-    calculate_employees_details(required_employee)
+    #calculate_employees_details(required_employee)
     # print("im after this fun")
     # if request.method == "POST":
     #     print("im in the if")
