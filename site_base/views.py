@@ -146,9 +146,9 @@ def clients_info(request):
 @login_required
 def employee_details(request, id):
     print("im in employee details fun")
-    #user = request.user
-    # required_employee = Employee.objects.get(id = id)
-    # connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
+    user = request.user
+    required_employee = Employee.objects.get(id = id)
+    connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
     # calculate_employees_details(required_employee)
     # print("im after this fun")
     # if request.method == "POST":
@@ -166,7 +166,7 @@ def employee_details(request, id):
     #         #context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
     #         return render(request,"site_base/employeedetails.html",context) 
         
-    return render(request,"site_base/employeedetails.html",{'required_employee': None, 'data':None, 'user': None}) 
+    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': user}) 
 
 @login_required
 def client_details(request):
