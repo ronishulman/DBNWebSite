@@ -146,7 +146,7 @@ def clients_info(request):
 @login_required
 def employee_details(request, id):
     print("im in employee details fun")
-    user = request.user
+    #user = request.user
     required_employee = Employee.objects.get(id = id)
     connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
     calculate_employees_details(required_employee)
@@ -163,9 +163,11 @@ def employee_details(request, id):
             return render(request,"site_base/employeedetails.html",context)   
         else:
             user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
-            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
+            #context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
             return render(request,"site_base/employeedetails.html",context) 
-    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': user}) 
+        
+    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': None}) 
+
 @login_required
 def client_details(request):
      user = request.user
