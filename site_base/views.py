@@ -150,7 +150,7 @@ def employee_details(request, id):
     required_employee = Employee.objects.get(id = id)
     connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
     calculate_employees_details(required_employee)
-
+    print("im after this fun")
     if request.method == "POST":
         print("im in the if")
         _month = request.POST.get('month')
@@ -313,6 +313,7 @@ def delete_employee(request):
 
 @login_required
 def calculate_employees_details(employee):
+    print("im in calcaute employee details")
     employees_shifts = Shift.objects.filter(employee_id=employee.id)
 
     employee.total_km = 0
