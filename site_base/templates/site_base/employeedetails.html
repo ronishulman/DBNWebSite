@@ -138,10 +138,10 @@
               <td>{{shift.shift_start_date_time|time:'H:i'}}</td>
               <td>{{shift.shift_end_date_time|time:'H:i'}}</td>
               <td>{{ shift.length_of_the_shift}}</td>
-              <td>{{ shift.amount_of_km}}</td>
-              <td>{{ shift.public_transport}}</td>
-              <td>{{ shift.food}}</td>
-              <td>{{ shift.parking_refund}}</td>
+              <td>{{ shift.amount_of_km|default:0}}</td>
+              <td>{{ shift.public_transport|default:0}}</td>
+              <td>{{ shift.food|default:0}}</td>
+              <td>{{ shift.parking_refund|default:0}}</td>
               <td></td>
             </tr>
           {%endfor%}
