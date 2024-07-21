@@ -1,0 +1,35 @@
+.formcontainer {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    margin-top: 5px;
+    justify-content: center;
+    max-width: 13rem;
+    width: 100%;
+    border-radius: 0.375rem;
+    padding: 1.875rem;
+    background-color: rgba(67, 127, 130, 0.055);
+    box-shadow: 0 0.313rem 10.625rem rgba(118, 124, 135, 0.1);
+}
+
+
+.list-group {
+    max-width: 10rem;
+}
+
+.filtering {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 1px solid #4a625350;
+    padding: 0.005rem
+}
+
+.filtering label,
+.filtering select,
+.filtering button {
+    margin: 0.5rem;
+}

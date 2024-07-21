@@ -58,7 +58,7 @@
                 </a>
                 <form action="{% url 'delete_all_WorkSchedule_shifts' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all shifts?');">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('?האם אתה בטוח שברצונך למחוק את כל המשמרות');">
                         מחק את כל המשמרות
                     </button>
                 </form>

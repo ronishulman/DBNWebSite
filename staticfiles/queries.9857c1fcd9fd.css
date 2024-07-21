@@ -1,0 +1,16 @@
+/* BELLOW px (Phones) */
+@media (max-width :34em) {
+
+    .nav {
+        width: 50%;
+    }
+
+    .container {
+        display: none;
+    }
+
+    .logout-button {
+        display: none;
+    }
+
+}

@@ -1,0 +1,16 @@
+.filtering {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 1px solid #4a625350;
+    padding: 0.005rem
+}
+
+.filtering label,
+.filtering select,
+.filtering button {
+    margin: 0.5rem;
+}
