@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'shift.apps.ShiftConfig',
     'clients.apps.ClientsConfig',
     'site_base.apps.SiteBaseConfig',
-    'background_task',
 ]
 
 MIDDLEWARE = [
