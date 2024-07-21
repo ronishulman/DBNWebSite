@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from employee.models import Employee
+from employee.models import Employee, EmployeeMonthlyData
 from shift.models import Shift
 from datetime import datetime
 from django.forms.models import model_to_dict
@@ -17,7 +17,7 @@ from django.shortcuts import get_object_or_404
 import json
 from clients.models import Client
 from .forms import WorkScheduleForm
-from django.utils import formats
+from django.utils import formats, timezone
 from datetime import date
 
 # GLOBAL VARIABLES
@@ -39,9 +39,11 @@ def profile_page(request):
     return render(request,"site_base/profile.html", {'connected_user': connected_user})
 
 #this function return the sign in page
+@login_required
 def sign_in_page(request):
     return render(request,"register/signin.html")
 #this function returns a page that displays for the logged in user his shifts
+
 @login_required
 def my_shifts(request):
     user = request.user
@@ -57,9 +59,11 @@ def my_shifts(request):
     user_shifts = Shift.objects.filter(employee_id = user_id).order_by("-shift_id")
     context = {"data": user_shifts , 'user': user}
     return render(request, "site_base/myshifts.html",context)
+
 @login_required
 def land_page(request):
     return render(request,"register/signin.html")
+
 @login_required
 def add_shift(request):
     sumbbited = False
@@ -73,6 +77,7 @@ def add_shift(request):
             return render(request, "site_base/addshift.html", {'form': form})
     form = WorkScheduleForm() 
     return render(request,"site_base/addshift.html", {'form':form})
+
 @login_required
 def update_WorkSchedule_shift(request , id):
     shift = WorkSchedule.objects.get(pk=id)
@@ -81,6 +86,7 @@ def update_WorkSchedule_shift(request , id):
         form.save()
         return redirect('homepage')
     return render(request, 'site_base/updateshift.html', {'shift':shift, 'form':form})
+
 @login_required
 def delete_WorkSchedule_shift(request , id):
     shift = get_object_or_404(WorkSchedule, pk=id)
@@ -129,12 +135,14 @@ def employees_shifts(request):
            return render(request,"site_base/employeesinfo.html", {'message': message, 'user': user})
 
     return render(request, "site_base/employeesinfo.html", context)
+
 @login_required
 def clients_info(request):
     user = request.user
     clients = Client.objects.all()
     context = {'clients': clients, 'user': user}         
     return render(request,"site_base/clientsinfo.html", context)
+
 @login_required
 def employee_details(request, id):
     user = request.user
@@ -155,6 +163,7 @@ def employee_details(request, id):
             user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
             context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
             return render(request,"site_base/employeedetails.html",context) 
+
 @login_required
 def client_details(request):
      user = request.user
@@ -171,6 +180,7 @@ def client_details(request):
             client_shifts = Shift.objects.filter(client = client_name, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
             context = {'data':client_shifts, 'clinet_name': client_name, 'user': user}
             return render(request,"site_base/clientdetails.html",context)
+        
 @login_required
 def employees_permits(request):
     user = request.user
@@ -199,7 +209,8 @@ def employees_permits(request):
 
     employees_waiting_for_permits = EmployeesWaitingForApproval.objects.all()
     context = {'employees': employees_waiting_for_permits, 'user': user}
-    return render(request,"site_base/employeespermits.html", context)          
+    return render(request,"site_base/employeespermits.html", context)   
+       
 @csrf_exempt
 def update_hourly_wage(request):
     if request.method == "POST":
@@ -213,6 +224,7 @@ def update_hourly_wage(request):
         return JsonResponse(json.dumps(response_data), safe=False)
     
     return JsonResponse({'success': False})
+
 @login_required
 def calulate_salary(request):
     all_shifts = Shift.objects.all()
@@ -223,6 +235,7 @@ def calulate_salary(request):
             salary += shift.shift_pay
 
     return salary
+
 @login_required
 def edit_profile(request):
     logged_in_user = Employee.objects.get(id = request.user.id)
@@ -262,10 +275,12 @@ def edit_profile(request):
         return profile_page(request)
 
     return render(request, 'site_base/editprofile.html', {'logged_in_user': logged_in_user})
+
 @login_required
 def log_out(request):
     logout(request)
     return render(request, 'register/signin.html')
+
 @login_required  
 def add_client(request):
     if request.method == 'POST':
@@ -275,6 +290,7 @@ def add_client(request):
 
         return redirect('clientsinfo')
     return render(request, "site_base/homepage.html")
+
 @login_required
 def delete_client(request):
     if request.method == "POST":
@@ -283,6 +299,7 @@ def delete_client(request):
         client.delete()
     return redirect('clientsinfo')
 
+@login_required
 def delete_employee(request):
     if request.method == "POST":
         employee_id = request.POST['employee_id']
@@ -292,6 +309,7 @@ def delete_employee(request):
         user.delete()
     return redirect('employeesinfo')
 
+@login_required
 def calculate_employees_details(employee):
     employees_shifts = Shift.objects.filter(employee_id=employee.id)
 
@@ -316,5 +334,38 @@ def calculate_employees_details(employee):
     employee.save()
     return
 
+@login_required
+def aggregate_monthly_data():
+    today = timezone.now().date()
+    if today.day != 1:  # Ensure it only runs on the first day of the month
+        return
 
+    current_month = today.replace(day=1)
+    employees = Employee.objects.all()
+
+    for employee in employees:
+        salary = employee.salary
+        total_km = employee.total_km
+        total_transport = employee.total_transport
+        total_food = employee.total_food
+        total_parking = employee.total_parking
+
+        EmployeeMonthlyData.objects.update_or_create(
+            employee=employee,
+            month=current_month,
+            defaults={
+                'salary': salary,
+                'total_km': total_km,
+                'total_transport': total_transport,
+                'total_food': total_food,
+                'total_parking': total_parking,
+            }
+        )
+
+        # Reset the employee's data for the new month
+        employee.total_km = 0
+        employee.total_transport = 0
+        employee.total_food = 0
+        employee.total_parking = 0
+        employee.save()
 

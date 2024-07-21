@@ -44,7 +44,6 @@ class ShiftFillingForm(ModelForm):
         }
 
 class ShiftUpdateForm(ModelForm):
-    # client = forms.ModelChoiceField(queryset=Client.objects.all(), label='לקוח')
     client = forms.ChoiceField(choices=client_choices, label='לקוח')
     type_of_shift = forms.ChoiceField(choices=TYPE_OF_SHIFT_CHOICES, label='סוג משמרת')
     amount_of_km = forms.FloatField(label='כמות קילומטרים', required=False, widget=forms.TextInput(attrs={'class': 'form-control'}), initial=None)
