@@ -145,26 +145,24 @@ def clients_info(request):
 
 @login_required
 def employee_details(request, id):
-    print("im in employee details fun")
     user = request.user
     required_employee = Employee.objects.get(id = id)
     connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
     calculate_employees_details(required_employee)
-    # print("im after this fun")
-    # if request.method == "POST":
-    #     print("im in the if")
-    #     _month = request.POST.get('month')
-    #     _year = request.POST.get('year')
+    if request.method == "POST":
+        print("im in if statement")
+        _month = request.POST.get('month')
+        _year = request.POST.get('year')
         
-    #     if not _month or not _year:
-    #         user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_id")
-    #         salary = calulate_salary(request)
-    #         context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary}
-    #         return render(request,"site_base/employeedetails.html",context)   
-    #     else:
-    #         user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
-    #         #context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
-    #         return render(request,"site_base/employeedetails.html",context) 
+        if not _month or not _year:
+            user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_id")
+            salary = calulate_salary(request)
+            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary}
+            return render(request,"site_base/employeedetails.html",context)   
+        else:
+            user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
+            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
+            return render(request,"site_base/employeedetails.html",context) 
         
     return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': user}) 
 
@@ -295,7 +293,7 @@ def add_client(request):
         return redirect('clientsinfo')
     return render(request, "site_base/homepage.html")
 
-@login_required
+
 def delete_client(request):
     if request.method == "POST":
         client_name = request.POST['client_name']
@@ -303,7 +301,7 @@ def delete_client(request):
         client.delete()
     return redirect('clientsinfo')
 
-@login_required
+
 def delete_employee(request):
     if request.method == "POST":
         employee_id = request.POST['employee_id']
@@ -313,30 +311,30 @@ def delete_employee(request):
         user.delete()
     return redirect('employeesinfo')
 
-@login_required
+
 def calculate_employees_details(employee):
     print("im in calcaute employee details")
-    # employees_shifts = Shift.objects.filter(employee_id=employee.id)
+    employees_shifts = Shift.objects.filter(employee_id=employee.id)
 
-    # employee.total_km = 0
-    # employee.total_food = 0
-    # employee.total_transport = 0
-    # employee.total_parking = 0
-    # employee.salary = 0
+    employee.total_km = 0
+    employee.total_food = 0
+    employee.total_transport = 0
+    employee.total_parking = 0
+    employee.salary = 0
 
-    # for shift in employees_shifts:
-    #     if shift.amount_of_km is not None:
-    #         employee.total_km += shift.amount_of_km
-    #     if shift.food is not None:
-    #         employee.total_food += shift.food
-    #     if shift.public_transport is not None:
-    #         employee.total_transport += shift.public_transport
-    #     if shift.parking_refund is not None:
-    #         employee.total_parking += shift.parking_refund
-    #     if shift.shift_pay is not None:
-    #         employee.salary += shift.shift_pay
+    for shift in employees_shifts:
+        if shift.amount_of_km is not None:
+            employee.total_km += shift.amount_of_km
+        if shift.food is not None:
+            employee.total_food += shift.food
+        if shift.public_transport is not None:
+            employee.total_transport += shift.public_transport
+        if shift.parking_refund is not None:
+            employee.total_parking += shift.parking_refund
+        if shift.shift_pay is not None:
+            employee.salary += shift.shift_pay
     
-    # employee.save()
+    employee.save()
     return
 
 @login_required
