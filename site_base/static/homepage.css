@@ -42,3 +42,10 @@ td>input {
     max-width: 200px;
     border-radius: 5px;
 }
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}

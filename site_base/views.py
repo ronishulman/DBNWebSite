@@ -86,6 +86,12 @@ def delete_WorkSchedule_shift(request , id):
     shift = get_object_or_404(WorkSchedule, pk=id)
     shift.delete()
     return redirect('homepage')
+
+@login_required
+def delete_all_WorkSchedule_shifts(request):
+    WorkSchedule.objects.all().delete()
+    return redirect('homepage')
+
 @login_required
 def employees_shifts(request):
     user = request.user
