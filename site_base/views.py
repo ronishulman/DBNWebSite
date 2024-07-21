@@ -147,26 +147,26 @@ def clients_info(request):
 def employee_details(request, id):
     print("im in employee details fun")
     #user = request.user
-    required_employee = Employee.objects.get(id = id)
-    connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
-    calculate_employees_details(required_employee)
-    print("im after this fun")
-    if request.method == "POST":
-        print("im in the if")
-        _month = request.POST.get('month')
-        _year = request.POST.get('year')
+    # required_employee = Employee.objects.get(id = id)
+    # connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
+    # calculate_employees_details(required_employee)
+    # print("im after this fun")
+    # if request.method == "POST":
+    #     print("im in the if")
+    #     _month = request.POST.get('month')
+    #     _year = request.POST.get('year')
         
-        if not _month or not _year:
-            user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_id")
-            salary = calulate_salary(request)
-            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary}
-            return render(request,"site_base/employeedetails.html",context)   
-        else:
-            user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
-            #context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
-            return render(request,"site_base/employeedetails.html",context) 
+    #     if not _month or not _year:
+    #         user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_id")
+    #         salary = calulate_salary(request)
+    #         context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary}
+    #         return render(request,"site_base/employeedetails.html",context)   
+    #     else:
+    #         user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
+    #         #context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
+    #         return render(request,"site_base/employeedetails.html",context) 
         
-    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': None}) 
+    return render(request,"site_base/employeedetails.html",{'required_employee': None, 'data':None, 'user': None}) 
 
 @login_required
 def client_details(request):
