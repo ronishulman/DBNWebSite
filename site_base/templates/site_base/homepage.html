@@ -56,7 +56,7 @@
                 <a href="{% url 'add_shift' %}" class="btn btn-info">
                     הוסף משמרת  
                 </a>
-                <form action="{% url 'delete_all_shifts' %}" method="post">
+                <form action="{% url 'delete_all_WorkSchedule_shifts' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all shifts?');">
                         מחק את כל המשמרות
