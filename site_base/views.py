@@ -327,7 +327,7 @@ def calculate_employees_details(employee):
     employee.total_parking = 0
     employee.salary = 0
 
-    for shift in employees_shifts:
+    for shift in employee_shifts:
         if shift.amount_of_km is not None:
             employee.total_km += shift.amount_of_km
         if shift.food is not None:
