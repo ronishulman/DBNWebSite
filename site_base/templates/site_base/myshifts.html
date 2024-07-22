@@ -89,7 +89,7 @@
         </thead>
         <tbody>
           {% for shift in data %}
-            <tr style="{% if shift.shift_end_date_time %}background-color: white;{% else %}background-color: red; color: white;{% endif %}">
+            <tr style="{% if not shift.shift_end_date_time %}background-color: red; color: white;{% endif %}">
               <td><a href="{% url 'updateshift-view' shift.shift_id  %}">{{shift.shift_start_date_time|date:'j.n.Y'}}</a></td>
               <td>{{ shift.location}}</td>
               <td>{{ shift.client}}</td>
