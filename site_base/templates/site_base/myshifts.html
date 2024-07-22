@@ -93,6 +93,7 @@
               <td><a href="{% url 'updateshift-view' shift.shift_id  %}">{{shift.shift_start_date_time|date:'j.n.Y'}}</a></td>
               <td>{{ shift.location}}</td>
               <td>{{ shift.client}}</td>
+              <td>End Date Time: {{ shift.shift_end_date_time }}</td>
             </tr>
           {%endfor%}
         </tbody>
