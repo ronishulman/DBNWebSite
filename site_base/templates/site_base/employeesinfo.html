@@ -79,6 +79,8 @@
               </form>
               {% endif %}
             </td>
+              <a href="{% url 'employee_monthly_data_detail' employee.id %}" class="btn btn-info">צפה בפרטים חודשיים</a>
+            </td>
             <td class="delete-button-cell">
               <form action="{% url 'delete_employee' %}" method="POST" onsubmit="return confirm('האם את/ה בטוח כי ברצונך למחוק את העובד?');">
                 {% csrf_token %}
@@ -87,8 +89,6 @@
               </form>
             </td>
             <td>
-              <a href="{% url 'employee_monthly_data_detail' employee.id %}" class="btn btn-info">צפה בפרטים חודשיים</a>
-            </td>
           </tr>
         {% endfor %}
       </tbody>

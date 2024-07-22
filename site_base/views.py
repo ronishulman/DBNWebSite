@@ -384,7 +384,10 @@ def aggregate_monthly_data(request):
     return HttpResponse('Invalid request method.', status=405)
 
 def Employee_Monthly_Data_Detail(request,id):
-    employee_monthly_data = get_object_or_404(EmployeeMonthlyData, id=id)
+    employee = get_object_or_404(Employee, id=id)
+
+    employee_monthly_data = get_object_or_404(EmployeeMonthlyData, employee=employee)
+    
     return render(request, 'employee_monthly_data_detail.html', {
             'employee_monthly_data': employee_monthly_data
         })
