@@ -388,6 +388,6 @@ def Employee_Monthly_Data_Detail(request,id):
 
     employee_monthly_data = get_object_or_404(EmployeeMonthlyData, employee=employee)
 
-    return render(request, 'employeemonthlydatadetail.html', {
+    return render(request, "site_base/employeemonthlydatadetail.html", {
             'employee_monthly_data': employee_monthly_data
         })
