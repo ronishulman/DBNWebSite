@@ -339,6 +339,7 @@ def calculate_employees_details(employee):
 
 
 def aggregate_monthly_data(request):
+    print("im insindet the fucntion")
     if request.method == 'POST':
         today = timezone.now().date()
         if today.day != 22:
@@ -346,7 +347,7 @@ def aggregate_monthly_data(request):
 
         current_month = today.replace(day=1)
         employees = Employee.objects.all()
-
+        print("im before the for")
         for employee in employees:
             salary = employee.salary
             total_km = employee.total_km
