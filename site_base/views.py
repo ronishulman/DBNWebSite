@@ -399,4 +399,4 @@ def delete_employee_from_employees_waiting_for_approvals(request):
 
         employee = EmployeesWaitingForApproval.objects.get(id=employee_id)
         employee.delete()
-        return employees_permits(request)
+        return homepage(request)
