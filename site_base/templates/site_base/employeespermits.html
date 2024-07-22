@@ -82,6 +82,13 @@
                   <button type="submit" class="btn btn-primary">אשר</button>
                 <td>
               </form>
+              <td>
+                <form action="{% url 'delete_employee_from_employees_waiting_for_approvals' %}" method="POST" onsubmit="return confirm('האם את/ה בטוח כי ברצונך למחוק את העובד?');">
+                    {% csrf_token %}
+                    <input type="hidden" name="employee_id" value="{{ employee.id }}">
+                    <button type="submit" class="btn btn-danger">מחק</button>
+                </form>
+              </td>
             </tr>
           {% endfor %}
         </tbody>

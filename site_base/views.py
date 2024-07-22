@@ -384,6 +384,7 @@ def aggregate_monthly_data(request):
     return HttpResponse('Invalid request method.', status=405)
 
 def Employee_Monthly_Data_Detail(request,id):
+
     employee = get_object_or_404(Employee, id=id)
 
     employee_monthly_data = get_object_or_404(EmployeeMonthlyData, employee=employee)
@@ -391,3 +392,11 @@ def Employee_Monthly_Data_Detail(request,id):
     return render(request, "site_base/employeemonthlydatadetail.html", {
             'employee_monthly_data': employee_monthly_data
         })
+
+def delete_employee_from_employees_waiting_for_approvals(request):
+    if request.method == 'POST':
+        employee_id = request.POST.get('employee_id')
+
+        employee = EmployeesWaitingForApproval.objects.get(id=employee_id)
+        employee.delete()
+        return employees_permits(request)
