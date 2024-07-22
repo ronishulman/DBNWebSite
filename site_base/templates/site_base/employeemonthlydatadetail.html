@@ -49,41 +49,29 @@
     <div class="container mt-4">
         <h2>פרטים חודשיים על העובד</h2>
         <table class="table table-striped">
-            <tbody>
+            <thead>
                 <tr>
                     <th>שם פרטי</th>
-                    <td>{{ employee_monthly_data.employee.first_name }}</td>
-                </tr>
-                <tr>
                     <th>שם משפחה</th>
-                    <td>{{ employee_monthly_data.employee.last_name }}</td>
-                </tr>
-                <tr>
                     <th>תעודת זהות</th>
-                    <td>{{ employee_monthly_data.employee.id }}</td>
-                </tr>
-                <tr>
                     <th>חודש</th>
-                    <td>{{ employee_monthly_data.month }}</td>
-                </tr>
-                <tr>
                     <th>משכורת</th>
-                    <td>{{ employee_monthly_data.salary }}</td>
-                </tr>
-                <tr>
                     <th>קילומטראז</th>
-                    <td>{{ employee_monthly_data.total_km }}</td>
-                </tr>
-                <tr>
                     <th>תחבורה ציבורית</th>
-                    <td>{{ employee_monthly_data.total_transport }}</td>
-                </tr>
-                <tr>
                     <th>אוכל</th>
-                    <td>{{ employee_monthly_data.total_food }}</td>
-                </tr>
-                <tr>
                     <th>חנייה</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ employee_monthly_data.employee.first_name }}</td>
+                    <td>{{ employee_monthly_data.employee.last_name }}</td>
+                    <td>{{ employee_monthly_data.employee.id }}</td>
+                    <td>{{ employee_monthly_data.month }}</td>
+                    <td>{{ employee_monthly_data.salary }}</td>
+                    <td>{{ employee_monthly_data.total_km }}</td>
+                    <td>{{ employee_monthly_data.total_transport }}</td>
+                    <td>{{ employee_monthly_data.total_food }}</td>
                     <td>{{ employee_monthly_data.total_parking }}</td>
                 </tr>
             </tbody>
