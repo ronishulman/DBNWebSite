@@ -104,35 +104,35 @@ def employees_shifts(request):
     employees = Employee.objects.all()
     context = {'employees': employees, 'user': user}
 
-    if request.method == "POST":
-        employee_name = request.POST['employee_full_name']
-        requested_month = request.POST['month']
-        requsted_year = request.POST['year']
+    # if request.method == "POST":
+    #     employee_name = request.POST['employee_full_name']
+    #     requested_month = request.POST['month']
+    #     requsted_year = request.POST['year']
 
-        if(requested_month):
-            requested_month = int(request.POST['month'])
-        if(requsted_year):
-            requsted_year = int(request.POST['year'])
+    #     if(requested_month):
+    #         requested_month = int(request.POST['month'])
+    #     if(requsted_year):
+    #         requsted_year = int(request.POST['year'])
 
-        if(' ' in employee_name):
-            first_name , last_name = employee_name.strip().split()
-            if(requested_month and requsted_year):
-                employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name, event_date__month= requested_month, event_date__year= requsted_year).order_by("-shift_id")
-            elif (requested_month):
-                employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name, event_date__month= requested_month).order_by("-shift_id")
-            elif(requsted_year):
-                employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name, event_date__year= requsted_year).order_by("-shift_id")
-            else:
-                employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name).order_by("-shift_id")
+    #     if(' ' in employee_name):
+    #         first_name , last_name = employee_name.strip().split()
+    #         if(requested_month and requsted_year):
+    #             employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name, event_date__month= requested_month, event_date__year= requsted_year).order_by("-shift_id")
+    #         elif (requested_month):
+    #             employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name, event_date__month= requested_month).order_by("-shift_id")
+    #         elif(requsted_year):
+    #             employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name, event_date__year= requsted_year).order_by("-shift_id")
+    #         else:
+    #             employee_requested_shifts = Shift.objects.filter(first_name = first_name, last_name = last_name).order_by("-shift_id")
 
-            if( employee_requested_shifts):                
-                return render(request,"site_base/employeesinfo.html", {'employee_requested_shifts': employee_requested_shifts, 'employee_name': employee_name, 'user': user})
-            else:
-                message = "there is no shifts for these employee" 
-                return render(request,"site_base/employeesinfo.html", {'message': message, 'user': user})
-        else:
-           message = "the name in invalid, please try again" 
-           return render(request,"site_base/employeesinfo.html", {'message': message, 'user': user})
+    #         if( employee_requested_shifts):                
+    #             return render(request,"site_base/employeesinfo.html", {'employee_requested_shifts': employee_requested_shifts, 'employee_name': employee_name, 'user': user})
+    #         else:
+    #             message = "there is no shifts for these employee" 
+    #             return render(request,"site_base/employeesinfo.html", {'message': message, 'user': user})
+    #     else:
+    #        message = "the name in invalid, please try again" 
+    #        return render(request,"site_base/employeesinfo.html", {'message': message, 'user': user})
 
     return render(request, "site_base/employeesinfo.html", context)
 
