@@ -103,10 +103,10 @@
                     <li><strong>סוג משמרת:</strong> {{shift.type_of_shift}}</li>
                     <li><strong>אורך המשמרת:</strong> {{shift.length_of_the_shift|floatformat:"3" }}</li>
                     <li><strong>מיקום:</strong> {{shift.location}}</li>
-                    <li><strong>קילומטראז:</strong> {{shift.amount_of_km}}</li>
-                    <li><strong>תחבורה ציבורית:</strong> {{shift.public_transport}}</li>
-                    <li><strong>אוכל:</strong> {{shift.food}}</li>
-                    <li><strong>חנייה:</strong> {{shift.parking_refund}}</li>
+                    <li><strong>קילומטראז:</strong> {{shift.amount_of_km|default:"0"}}</li>
+                    <li><strong>תחבורה ציבורית:</strong> {{shift.public_transport|default:"0"}}</li>
+                    <li><strong>אוכל:</strong> {{shift.food|default:"0"}}</li>
+                    <li><strong>חנייה:</strong> {{shift.parking_refund|default:"0"}}</li>
                   </ul>
                 </td>
               </tr>
