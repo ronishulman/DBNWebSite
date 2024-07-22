@@ -68,7 +68,7 @@
                     <td>{{ employee_monthly_data.employee.last_name }}</td>
                     <td>{{ employee_monthly_data.employee.id }}</td>
                     <td>{{ employee_monthly_data.month }}</td>
-                    <td>{{ employee_monthly_data.salary }}</td>
+                    <td>{{ employee_monthly_data.salary|floatformat:2 }}</td>
                     <td>{{ employee_monthly_data.total_km }}</td>
                     <td>{{ employee_monthly_data.total_transport }}</td>
                     <td>{{ employee_monthly_data.total_food }}</td>
