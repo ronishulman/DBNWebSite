@@ -16,9 +16,10 @@ class EmployeeMonthlyDataAdmin(admin.ModelAdmin):
     def employee_id(self, obj):
         return obj.employee.id
 
+    employee_id.short_description = 'ID'
     employee_first_name.short_description = 'First Name'
     employee_last_name.short_description = 'Last Name'
-    employee_id.short_description = 'ID'
+
 
 
 admin.site.register(EmployeeMonthlyData, EmployeeMonthlyDataAdmin)
