@@ -21,5 +21,6 @@ urlpatterns = [
     path('update_WorkSchedule_shift/<int:id>', views.update_WorkSchedule_shift, name="update-shift"),
     path('delete_WorkSchedule_shift/<int:id>', views.delete_WorkSchedule_shift, name="delete-shift"),
     path('delete_all_WorkSchedule_shifts/', views.delete_all_WorkSchedule_shifts, name='delete_all_WorkSchedule_shifts'),
+    path('aggregate-monthly-data/', views.aggregate_monthly_data, name='aggregate_monthly_data'),
     path('', include('shift.urls')), 
 ]
