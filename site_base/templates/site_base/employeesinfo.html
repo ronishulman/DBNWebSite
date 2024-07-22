@@ -86,6 +86,9 @@
                 <button type="submit" class="btn btn-danger">מחק</button>
               </form>
             </td>
+            <td>
+              <a href="{% url 'employee_monthly_data_detail' employee.id %}" class="btn btn-info">צפה בפרטים חודשיים</a>
+            </td>
           </tr>
         {% endfor %}
       </tbody>
