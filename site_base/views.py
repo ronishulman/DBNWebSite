@@ -354,7 +354,7 @@ def aggregate_monthly_data(request):
             total_transport = employee.total_transport
             total_food = employee.total_food
             total_parking = employee.total_parking
-
+            print(employee)
             EmployeeMonthlyData.objects.update_or_create(
                 employee=employee,
                 month=current_month,
