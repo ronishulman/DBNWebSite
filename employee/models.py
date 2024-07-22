@@ -30,4 +30,4 @@ class EmployeeMonthlyData(models.Model):
     total_parking = models.FloatField()
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.employee.first_name} {self.employee.last_name} - {self.month.strftime("%B %Y")}'

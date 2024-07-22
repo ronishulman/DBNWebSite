@@ -293,14 +293,12 @@ def add_client(request):
         return redirect('clientsinfo')
     return render(request, "site_base/homepage.html")
 
-
 def delete_client(request):
     if request.method == "POST":
         client_name = request.POST['client_name']
         client = Client.objects.get(name=client_name)
         client.delete()
     return redirect('clientsinfo')
-
 
 def delete_employee(request):
     if request.method == "POST":
@@ -311,10 +309,17 @@ def delete_employee(request):
         user.delete()
     return redirect('employeesinfo')
 
-
 def calculate_employees_details(employee):
-    print("im in calcaute employee details")
-    employees_shifts = Shift.objects.filter(employee_id=employee.id)
+
+    today = timezone.now().date()
+
+    start_of_month = today.replace(day=1)
+    end_of_month = today.replace(day=1, month=today.month + 1) - timezone.timedelta(days=1)
+
+    employee_shifts = Shift.objects.filter(
+        employee_id=employee.id,
+        shift_start_date_time__date__range=(start_of_month, end_of_month)
+    )
 
     employee.total_km = 0
     employee.total_food = 0
@@ -337,7 +342,6 @@ def calculate_employees_details(employee):
     employee.save()
     return
 
-
 def aggregate_monthly_data(request):
     print("im insindet the fucntion")
     if request.method == 'POST':
@@ -347,14 +351,14 @@ def aggregate_monthly_data(request):
 
         current_month = today.replace(day=1)
         employees = Employee.objects.all()
-        print("im before the for")
+
         for employee in employees:
             salary = employee.salary
             total_km = employee.total_km
             total_transport = employee.total_transport
             total_food = employee.total_food
             total_parking = employee.total_parking
-            print(employee)
+
             EmployeeMonthlyData.objects.update_or_create(
                 employee=employee,
                 month=current_month,
@@ -368,6 +372,7 @@ def aggregate_monthly_data(request):
             )
 
             # Reset the employee's data for the new month
+            employee.salary = 0
             employee.total_km = 0
             employee.total_transport = 0
             employee.total_food = 0
