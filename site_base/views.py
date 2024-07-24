@@ -400,3 +400,13 @@ def delete_employee_from_employees_waiting_for_approvals(request):
         employee = EmployeesWaitingForApproval.objects.get(id=employee_id)
         employee.delete()
         return homepage(request)
+    
+def register_for_shift(request, shift_id):
+    shift = get_object_or_404(WorkSchedule, id=shift_id)
+    employee = request.user.employee  
+
+    if shift.employees.count() < shift.num_of_employees:
+        shift.employees.add(employee)
+        shift.save() 
+        return homepage(request)
+
