@@ -20,6 +20,9 @@ class Employee(models.Model):
     shift_start_date_time = models.DateTimeField(null=True)
     shift_end_date_time = models.DateTimeField(null=True)
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"  # Returns full name
+
 class EmployeeMonthlyData(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     month = models.DateField()

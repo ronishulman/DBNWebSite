@@ -45,7 +45,11 @@ TYPE_OF_SHIFT_CHOICES = [
 class WorkScheduleForm(ModelForm):
     client = forms.ModelChoiceField(queryset=Client.objects.all(), empty_label=None, label='לקוח', widget=forms.Select(attrs={'class': 'full-width'}))
     type_of_shift = forms.ChoiceField(choices=TYPE_OF_SHIFT_CHOICES, label='סוג משמרת', widget=forms.Select(attrs={'class': 'full-width'}))
-    employees = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'full-width'}), label='עובדים')  # Add the employee selection
+    employees = forms.ModelMultipleChoiceField(
+            queryset=Employee.objects.all(),
+            widget=forms.CheckboxSelectMultiple,
+            label='עובדים'
+        )
 
     class Meta:
         model = WorkSchedule
