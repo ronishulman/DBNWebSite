@@ -94,14 +94,14 @@
                             <div style="color: red;"><b>הערות</b> - {{ shift.notes }}</div>
                         {% endif %}
                         {% if employee not in shift.employees.all and shift.employees.count < shift.num_of_employees and not user.is_superuser %}
-                        <form action="{% url 'start-shift' shift.id %}" method="POST" onsubmit="hideStartButton(this)">
+                        <form action="{% url 'register-for-shift' shift.id %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">הרשם למשמרת</button>
                             </form>
                         {% endif %}
 
                         {% if connected_employee in shift.employees.all %}
-                        <form action="{% url 'start-shift' shift.id %}" method="POST">
+                        <form action="{% url 'start-shift' shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary">התחל משמרת</button>
                         </form>
