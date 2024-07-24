@@ -26,9 +26,13 @@ counter = 0
 # this function returns the homepage
 @login_required
 def homepage(request):
-    connected_employee = Employee.objects.get(id = request.user.id)
     work_schedule_list = WorkSchedule.objects.all().order_by('date')
-    return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee})
+
+    if request.user.is_superuser:
+        return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee})      
+    else:
+        connected_employee = Employee.objects.get(id = request.user.id)
+        return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee})
 
 @login_required
 def profile_page(request):
