@@ -93,6 +93,12 @@
                         {% if shift.notes %}
                             <div style="color: red;"><b>הערות</b> - {{ shift.notes }}</div>
                         {% endif %}
+                        {% if shift.employees.count < shift.num_of_employees %}     
+                            <form action="{% url 'register-for-shift' shift.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">הרשם למשמרת</button>  
+                            </form>
+                        {% endif %}
                     </td>
                     {% if user.is_superuser%}
                         <td align="left">
