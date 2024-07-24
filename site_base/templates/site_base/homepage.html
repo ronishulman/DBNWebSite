@@ -100,7 +100,7 @@
                             </form>
                         {% endif %}
 
-                        {% if connected_employee in shift.employees.all and shift.shift_start_date_time == None %}
+                        {% if connected_employee in shift.employees.all and not shift.shift_start_date_time %}
                             <form action="{% url 'start-shift' shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">התחל משמרת</button>
