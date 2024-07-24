@@ -100,7 +100,7 @@
                             </form>
                         {% endif %}
 
-                        {% if employee in shift.employees.all %}
+                        {% if connected_employee in shift.employees.all %}
                         <form action="{% url 'start-shift' shift.id %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary">התחל משמרת</button>
