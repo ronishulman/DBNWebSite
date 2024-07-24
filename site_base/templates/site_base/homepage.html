@@ -104,6 +104,7 @@
                             <form action="{% url 'start-shift' shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">התחל משמרת</button>
+                                {{ shift.shift_end_date_time}}
                             </form>
                         {% endif %}
 
