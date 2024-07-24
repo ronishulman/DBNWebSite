@@ -411,16 +411,21 @@ def register_for_shift(request, shift_id):
         return homepage(request)
 
 def start_shift(request, shift_id):
-    # shift = get_object_or_404(WorkSchedule, id=shift_id)
-    # employee = get_object_or_404(Employee, user=request.user)
-    
-    # # Check if the employee is associated with this shift
-    # if employee in shift.employees.all():
-    #     # Here you can implement your logic for starting the shift
-    #     # e.g., update the shift status, log the start time, notify others, etc.
-    #     # Example: shift.start_time = timezone.now()
-    #     # shift.save()
+    shift = get_object_or_404(WorkSchedule, id=shift_id)
+    employee = get_object_or_404(Employee, id=request.user.id)
 
-    #     return redirect('some_success_view')  # Redirect to a success page or the same page with a message
-    
+    if employee in shift.employees.all():  
+        new_shift = Shift(
+            first_name=employee.first_name,
+            last_name=employee.last_name,
+            employee_id=employee.id, 
+            shift_start_date_time=timezone.now(),
+            type_of_shift=shift.type_of_shift, 
+            client=shift.client,
+            location=shift.location 
+        )
+        new_shift.save()  # Save the new Shift record
+
+        return homepage(request)
+
     return homepage(request)
