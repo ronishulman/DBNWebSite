@@ -15,6 +15,7 @@ from django.contrib.auth import logout
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 import json
+import pytz
 from clients.models import Client
 from .forms import WorkScheduleForm
 from django.utils import formats, timezone
@@ -22,6 +23,7 @@ from datetime import date
 
 # GLOBAL VARIABLES
 counter = 0
+israel_tz = pytz.timezone('Asia/Jerusalem')
 
 # this function returns the homepage
 @login_required
@@ -423,7 +425,7 @@ def start_shift(request, shift_id):
             first_name=employee.first_name,
             last_name=employee.last_name,
             employee_id=employee.id, 
-            shift_start_date_time=timezone.now(),
+            shift_start_date_time=timezone.now().astimezone(israel_tz),
             type_of_shift=shift.type_of_shift, 
             client=shift.client,
             location=shift.location 
