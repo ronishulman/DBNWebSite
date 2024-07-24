@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from employee.models import Employee
 
 #Create your models here.
 class WorkSchedule(models.Model):
@@ -9,8 +10,8 @@ class WorkSchedule(models.Model):
     client = models.CharField(max_length=30)
     type_of_shift = models.CharField(max_length=100, null= True)
     beginning_time = models.CharField(max_length=30)
-    num_of_employees = models.CharField(max_length=30)
-    name_of_employees = models.TextField(null=True)
+    num_of_employees = models.PositiveIntegerField() 
+    employees = models.ManyToManyField(Employee, related_name='shifts', blank=True)
     location = models.CharField(max_length=30, null=True)
     notes = models.TextField(null=True, blank=True)
 
