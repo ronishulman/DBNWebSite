@@ -26,7 +26,7 @@ counter = 0
 # this function returns the homepage
 @login_required
 def homepage(request):
-    print("הגעתי לפה")
+
     work_schedule_list = WorkSchedule.objects.all().order_by('date')
     return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user})
 
@@ -410,3 +410,17 @@ def register_for_shift(request, shift_id):
         shift.save() 
         return homepage(request)
 
+def start_shift(request, shift_id):
+    # shift = get_object_or_404(WorkSchedule, id=shift_id)
+    # employee = get_object_or_404(Employee, user=request.user)
+    
+    # # Check if the employee is associated with this shift
+    # if employee in shift.employees.all():
+    #     # Here you can implement your logic for starting the shift
+    #     # e.g., update the shift status, log the start time, notify others, etc.
+    #     # Example: shift.start_time = timezone.now()
+    #     # shift.save()
+
+    #     return redirect('some_success_view')  # Redirect to a success page or the same page with a message
+    
+    return homepage(request)
