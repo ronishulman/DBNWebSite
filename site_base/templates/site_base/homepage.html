@@ -85,7 +85,11 @@
                         <div><b>זמן התחלה</b> - {{ shift.beginning_time }}</div>
                         <div><b>מיקום</b> - {{ shift.location }}</div>
                         <div><b>מספר עובדים</b> - {{ shift.num_of_employees }}</div>
-                        <div><b>שמות עובדים</b> - {{ shift.name_of_employees }}</div>
+                        <div><b>שמות עובדים</b> - 
+                            {% for employee in shift.employees.all %}
+                                {{ employee }}{% if not forloop.last %}, {% endif %} 
+                            {% endfor %}
+                        </div>
                         {% if shift.notes %}
                             <div style="color: red;"><b>הערות</b> - {{ shift.notes }}</div>
                         {% endif %}
