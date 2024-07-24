@@ -412,7 +412,7 @@ def register_for_shift(request, shift_id):
     if shift.employees.count() < shift.num_of_employees:
         shift.employees.add(employee)
         shift.save() 
-        return homepage(request)
+        return 
 
 def start_shift(request, shift_id):
     shift = get_object_or_404(WorkSchedule, id=shift_id)
