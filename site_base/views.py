@@ -367,7 +367,6 @@ def calculate_employees_details(employee):
     return
 
 def aggregate_monthly_data(request):
-    print("im insindet the fucntion")
     if request.method == 'POST':
         today = timezone.now().date()
         if today.day != 22:
