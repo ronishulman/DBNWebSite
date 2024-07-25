@@ -101,22 +101,12 @@
                         {% endif %}
 
                         {% if connected_employee in work_schedule_shift.employees.all %}
-                            {% with shift_exists=False %}
-                                {% for shift in connected_employees_shifts %}
-                                    {% if shift.work_schedule.id == work_schedule_shift.id %}
-                                    <p>shift.work_schedule.id: {{ shift.work_schedule.id }}</p>
-                                    <p>work_schedule_shift.id: {{ work_schedule_shift.id }}</p>
-                                        {% with shift_exists=True %}{% endwith %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if not shift_exists %}
-                                    <p>Shift Exists: {{ shift_exists }}</p>
+                            {% if work_schedule_shift.id not in existing_shift_ids %}
                                     <form action="{% url 'start-shift' work_schedule_shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-primary">התחל משמרת</button>
                                     </form>
                                 {% endif %}
-                            {% endwith %}
                         {% endif %}
 
                     </td>

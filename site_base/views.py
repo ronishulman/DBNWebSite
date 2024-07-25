@@ -35,7 +35,8 @@ def homepage(request):
     else:
         connected_employee = Employee.objects.get(id = request.user.id)
         connected_employees_shifts = Shift.objects.filter(employee_id = connected_employee.id )
-        return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts})
+        existing_shift_ids = {shift.work_schedule.id for shift in connected_employees_shifts}
+        return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
 
 @login_required
 def profile_page(request):
@@ -419,20 +420,23 @@ def register_for_shift(request, shift_id):
 
 def start_shift(request, shift_id):
     work_schedule_shift = get_object_or_404(WorkSchedule, id=shift_id)
+
     employee = get_object_or_404(Employee, id=request.user.id)
 
     if employee in work_schedule_shift.employees.all():  
-        new_shift = Shift(
-            first_name=employee.first_name,
-            last_name=employee.last_name,
-            employee_id=employee.id, 
-            shift_start_date_time=timezone.now().astimezone(israel_tz),
-            type_of_shift=work_schedule_shift.type_of_shift, 
-            client=work_schedule_shift.client,
-            location=work_schedule_shift.location,
-            work_schedule= work_schedule_shift
-        )
-        new_shift.save() 
+        existing_shift = Shift.objects.filter(employee_id=employee.id, work_schedule=work_schedule_shift).first()
+        if not existing_shift: 
+            new_shift = Shift(
+                first_name=employee.first_name,
+                last_name=employee.last_name,
+                employee_id=employee.id, 
+                shift_start_date_time=timezone.now().astimezone(israel_tz),
+                type_of_shift=work_schedule_shift.type_of_shift, 
+                client=work_schedule_shift.client,
+                location=work_schedule_shift.location,
+                work_schedule= work_schedule_shift
+                )
+            new_shift.save() 
 
         return homepage(request)
 
