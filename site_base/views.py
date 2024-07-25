@@ -30,6 +30,7 @@ israel_tz = pytz.timezone('Asia/Jerusalem')
 @login_required
 def homepage(request):
     work_schedule_list = WorkSchedule.objects.all().order_by('date')
+    current_date = timezone.now().date()
 
     if request.user.is_superuser:
         return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user})      
@@ -42,15 +43,15 @@ def homepage(request):
 
         if filter_option == 'משמרות שלי':
             work_schedule_list = work_schedule_list.filter(employees=connected_employee)
-            return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
+            return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids, 'current_date': current_date})
         
         elif filter_option == 'משמרות פנויות':
             work_schedule_list = work_schedule_list.annotate(
                 current_emp_count=Count('employees')
             ).filter(current_emp_count__lt=F('num_of_employees')).exclude(employees=connected_employee)
-            return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
+            return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids, 'current_date': current_date})
         
-        return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
+        return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids, 'current_date': current_date})
 
 @login_required
 def profile_page(request):

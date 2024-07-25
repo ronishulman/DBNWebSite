@@ -113,11 +113,13 @@
 
                         {% if connected_employee in work_schedule_shift.employees.all %}
                             {% if work_schedule_shift.id not in existing_shift_ids %}
+                                {% if work_schedule_shift.date == current_date %}
                                     <form action="{% url 'start-shift' work_schedule_shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-primary">התחל משמרת</button>
                                     </form>
                                 {% endif %}
+                            {% endif %}
                         {% endif %}
 
                     </td>
