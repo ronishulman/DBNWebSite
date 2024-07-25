@@ -108,6 +108,7 @@
                                     {% endif %}
                                 {% endfor %}
                                 {% if not shift_exists %}
+                                    <p>Shift Exists: {{ shift_exists }}</p>
                                     <form action="{% url 'start-shift' work_schedule_shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-primary">התחל משמרת</button>
