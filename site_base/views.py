@@ -477,6 +477,10 @@ def start_shift(request, shift_id):
     return homepage(request)
 
 def update_messages_page(request):
-    messages = UpdateMessages.objects.all().order_by('-created_at')
+    now = timezone.now()
+    messages = UpdateMessages.objects.filter(
+        created_at__year=now.year,
+        created_at__month=now.month
+        ).order_by('-created_at')
 
     return render(request, "site_base/updatespage.html", {'messages': messages })
