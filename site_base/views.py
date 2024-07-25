@@ -437,8 +437,9 @@ def start_shift(request, shift_id):
     work_schedule_shift = get_object_or_404(WorkSchedule, id=shift_id)
 
     israel_tz = pytz.timezone('Asia/Jerusalem')
-    shift_start_time  = timezone.now().astimezone(israel_tz)
-
+    shift_start_time = timezone.now().astimezone(israel_tz)  # Current time in Israel
+    shift_start_time_utc = shift_start_time.astimezone(pytz.utc)  # Convert to UTC
+    print(shift_start_time_utc)
     employee = get_object_or_404(Employee, id=request.user.id)
 
     if employee in work_schedule_shift.employees.all():  
@@ -448,7 +449,7 @@ def start_shift(request, shift_id):
                 first_name=employee.first_name,
                 last_name=employee.last_name,
                 employee_id=employee.id, 
-                shift_start_date_time=shift_start_time,
+                shift_start_date_time=shift_start_time_utc,
                 type_of_shift=work_schedule_shift.type_of_shift, 
                 client=work_schedule_shift.client,
                 location=work_schedule_shift.location,
