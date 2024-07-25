@@ -74,7 +74,7 @@
                 <tr>
                     <td>{{ message.employee.first_name }} {{ message.employee.last_name }}</td>
                     <td>{{ message.message }}</td>
-                    <td>{{ message.created_at|date:'j.n.Y' }}</td>
+                    <td>{{ message.created_at|date:"d-m-Y H:i:s" }}</td>
                 </tr>
             {% empty %}
                 <tr>

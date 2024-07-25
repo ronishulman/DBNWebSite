@@ -433,13 +433,14 @@ def register_for_shift(request, shift_id):
         shift.employees.add(employee)
         shift.save() 
 
-        message = f"נרשם למשמרת של {shift.client} בתאריך {shift.date} במיקום {shift.location}."
+        formatted_date = shift.date.strftime('%d-%m-%Y')
+        message = f"נרשם למשמרת של {shift.client} בתאריך {formatted_date} במיקום {shift.location}."
         
         UpdateMessages.objects.create(
             employee=employee,
             message=message
         )
-        
+
         return homepage(request)
 
 def start_shift(request, shift_id):
