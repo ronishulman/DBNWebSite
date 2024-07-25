@@ -19,9 +19,9 @@
         <div class="collapse navbar-collapse"  id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 {% if not user.is_superuser %}
-                <li class="nav-item">
+                {% comment %} <li class="nav-item">
                     <a class="nav-link" href="/shift">מלא משמרת</a>
-                </li>
+                </li> {% endcomment %}
                 <li class="nav-item">
                     <a class="nav-link" href="/myshifts">המשמרות שלי</a>
                 </li>
