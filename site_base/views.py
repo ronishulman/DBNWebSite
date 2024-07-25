@@ -88,7 +88,7 @@ def land_page(request):
     return render(request,"register/signin.html")
 
 @login_required
-def add_shift(request):
+def add_workschedule_shift(request):
     sumbbited = False
     if request.method == "POST":
         form = WorkScheduleForm(request.POST)
@@ -97,7 +97,7 @@ def add_shift(request):
             return HttpResponseRedirect('/homepage')
         else:
             print(form.errors)
-            return render(request, "site_base/addshift.html", {'form': form})
+            return render(request, "site_base/add_WorkSchedule_shift.html", {'form': form})
     form = WorkScheduleForm() 
     return render(request,"site_base/addshift.html", {'form':form})
 
@@ -438,7 +438,7 @@ def start_shift(request, shift_id):
 
     israel_tz = pytz.timezone('Asia/Jerusalem')
     shift_start_time = timezone.now().astimezone(israel_tz)
-    print(shift_start_time)
+
     employee = get_object_or_404(Employee, id=request.user.id)
 
     if employee in work_schedule_shift.employees.all():  

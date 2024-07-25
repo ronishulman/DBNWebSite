@@ -13,6 +13,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from datetime import date, datetime, timedelta, time
 from django.utils import timezone
 import datetime
+import pytz
 from .models import Shift
 from clients.models import Client
 from employee.models import Employee
@@ -104,7 +105,9 @@ def update_shift(request , id):
 
 def end_shift(request , id):
     current_shift = Shift.objects.get(shift_id = id)
-    current_shift.shift_end_date_time = timezone.now()
+    israel_tz = pytz.timezone('Asia/Jerusalem')
+    shift_end_time = timezone.now().astimezone(israel_tz)
+    current_shift.shift_end_date_time = shift_end_time
     current_shift.save()
     return redirect(reverse('updateshift-view', args=[id]))
     
