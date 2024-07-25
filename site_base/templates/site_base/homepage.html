@@ -94,7 +94,7 @@
                             <div style="color: red;"><b>הערות</b> - {{ work_schedule_shift.notes }}</div>
                         {% endif %}
                         {% if connected_employee not in work_schedule_shift.employees.all and work_schedule_shift.employees.count < work_schedule_shift.num_of_employees and not user.is_superuser %}
-                        <form action="{% url 'register-for-shift' shift.id %}" method="POST">
+                        <form action="{% url 'register-for-shift' work_schedule_shift.id %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">הרשם למשמרת</button>
                             </form>
