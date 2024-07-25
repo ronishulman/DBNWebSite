@@ -29,12 +29,12 @@ israel_tz = pytz.timezone('Asia/Jerusalem')
 @login_required
 def homepage(request):
     work_schedule_list = WorkSchedule.objects.all().order_by('date')
-    connected_employee = Employee.objects.get(id = request.user.id)
-    connected_employees_shifts = Shift.objects.filter(employee_id = connected_employee.id )
 
     if request.user.is_superuser:
         return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user})      
     else:
+        connected_employee = Employee.objects.get(id = request.user.id)
+        connected_employees_shifts = Shift.objects.filter(employee_id = connected_employee.id )
         return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts})
 
 @login_required
