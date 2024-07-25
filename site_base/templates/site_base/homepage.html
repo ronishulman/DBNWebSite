@@ -110,10 +110,10 @@
                     </td>
                     {% if user.is_superuser%}
                         <td align="left">
-                            <a href="{% url 'update-shift' shift.id %}" class="btn btn-secondary">עדכן</a>
+                            <a href="{% url 'update-workschedule-shift' work_schedule_shift.id %}" class="btn btn-secondary">עדכן</a>
                         </td>
                         <td align="left">
-                         <a href="{% url 'delete-shift' shift.id %}" class="btn btn-danger">מחק</a>
+                         <a href="{% url 'delete-workschedule-shift' work_schedule_shift.id %}" class="btn btn-danger">מחק</a>
                         </td>
                     {%endif%} 
                 </tr>
