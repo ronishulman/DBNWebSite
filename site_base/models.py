@@ -15,3 +15,11 @@ class WorkSchedule(models.Model):
     location = models.CharField(max_length=30, null=True)
     notes = models.TextField(null=True, blank=True)
 
+class UpdateMessages(models.Model):
+    message = models.TextField()
+    employee = models.ForeignKey(Employee , on_delete=models.CASCADE) 
+    created_at = models.DateTimeField(auto_now_add=True) 
+
+    def __str__(self):
+        return f"{self.employee.first_name} {self.employee.last_name}: {self.message}"
+
