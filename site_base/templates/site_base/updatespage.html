@@ -58,7 +58,33 @@
             </ul>
         </div>
   </nav>
-  
+
+  <div class="container">
+    <h2>עדכונים</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>עובד</th>
+                <th>הודעה</th>
+                <th>זמן</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td>{{ message.employee.first_name }} {{ message.employee.last_name }}</td>
+                    <td>{{ message.message }}</td>
+                    <td>{{ message.created_at|date:"d-m-Y H:i:s" }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">אין הודעות.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
 </body>
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

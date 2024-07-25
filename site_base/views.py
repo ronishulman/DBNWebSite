@@ -16,6 +16,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 import json
 import pytz
+from .models import UpdateMessages
 from django.db.models import Count, F, Q
 from clients.models import Client
 from .forms import WorkScheduleForm
@@ -454,8 +455,19 @@ def start_shift(request, shift_id):
                 location=work_schedule_shift.location,
                 work_schedule= work_schedule_shift
                 )
-            new_shift.save() 
+            new_shift.save()
+
+        message = f"{employee.first_name} {employee.last_name} נכנס אל המשמרת בשעה {new_shift.shift_start_date_time.strftime('%H:%M')}."
+        UpdateMessages.objects.create(
+            message=message,
+            employee=employee
+        )
 
         return homepage(request)
 
     return homepage(request)
+
+def update_messages_page(request):
+    messages = UpdateMessages.objects.all().order_by('-created_at')
+
+    return render(request, "site_base/updatespage.html", {'messages': messages })
