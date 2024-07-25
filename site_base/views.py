@@ -435,7 +435,9 @@ def register_for_shift(request, shift_id):
 
 def start_shift(request, shift_id):
     work_schedule_shift = get_object_or_404(WorkSchedule, id=shift_id)
-
+    israel_tz = pytz.timezone('Asia/Jerusalem')
+    time = timezone.now().astimezone(israel_tz)
+    print(time)
     employee = get_object_or_404(Employee, id=request.user.id)
 
     if employee in work_schedule_shift.employees.all():  
