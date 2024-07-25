@@ -432,6 +432,14 @@ def register_for_shift(request, shift_id):
     if shift.employees.count() < shift.num_of_employees:
         shift.employees.add(employee)
         shift.save() 
+
+        message = f"נרשם למשמרת של {shift.client} בתאריך {shift.date} במיקום {shift.location}."
+        
+        UpdateMessages.objects.create(
+            employee=employee,
+            message=message
+        )
+        
         return homepage(request)
 
 def start_shift(request, shift_id):
@@ -457,7 +465,7 @@ def start_shift(request, shift_id):
                 )
             new_shift.save()
 
-        message = f"{employee.first_name} {employee.last_name} נכנס אל המשמרת בשעה {new_shift.shift_start_date_time.strftime('%H:%M')}."
+        message = f"נכנס אל המשמרת של {work_schedule_shift.client} ב{work_schedule_shift.location}."
         UpdateMessages.objects.create(
             message=message,
             employee=employee
