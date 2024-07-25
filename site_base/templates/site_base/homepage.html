@@ -63,9 +63,9 @@
         {% if not user.is_superuser %}
             <form method="GET" action="{% url 'homepage' %}">  
                 <select name="filter_option" id="filter_option">
-                    <option value="all_shifts">כל המשמרות</option>
-                    <option value="my_shifts">משמרות שלי</option>
-                    <option value="missing_people">משמרות פנויות</option>
+                    <option value="כל המשמרות">כל המשמרות</option>
+                    <option value="משמרות שלי">משמרות שלי</option>
+                    <option value="משמרות פנויות">משמרות פנויות</option>
                 </select>
                 <button type="submit" class="btn btn-secondary">סנן</button> 
             </form>
