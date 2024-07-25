@@ -104,6 +104,8 @@
                             {% with shift_exists=False %}
                                 {% for shift in connected_employees_shifts %}
                                     {% if shift.work_schedule.id == work_schedule_shift.id %}
+                                    <p>shift.work_schedule.id: {{ shift.work_schedule.id }}</p>
+                                    <p>work_schedule_shift.id: {{ work_schedule_shift.id }}</p>
                                         {% with shift_exists=True %}{% endwith %}
                                     {% endif %}
                                 {% endfor %}
