@@ -418,20 +418,21 @@ def register_for_shift(request, shift_id):
         return homepage(request)
 
 def start_shift(request, shift_id):
-    shift = get_object_or_404(WorkSchedule, id=shift_id)
+    work_schedule_shift = get_object_or_404(WorkSchedule, id=shift_id)
     employee = get_object_or_404(Employee, id=request.user.id)
 
-    if employee in shift.employees.all():  
+    if employee in work_schedule_shift.employees.all():  
         new_shift = Shift(
             first_name=employee.first_name,
             last_name=employee.last_name,
             employee_id=employee.id, 
             shift_start_date_time=timezone.now().astimezone(israel_tz),
-            type_of_shift=shift.type_of_shift, 
-            client=shift.client,
-            location=shift.location 
+            type_of_shift=work_schedule_shift.type_of_shift, 
+            client=work_schedule_shift.client,
+            location=work_schedule_shift.location,
+            work_schedule= work_schedule_shift
         )
-        new_shift.save()  # Save the new Shift record
+        new_shift.save() 
 
         return homepage(request)
 
