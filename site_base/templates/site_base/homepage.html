@@ -75,25 +75,25 @@
         {% endif %}
         <br>
         <table class="table table-striped table-hover table-bordered">
-            {%for shift in work_schedule_list %}
+            {%for work_schedule_shift in work_schedule_list %}
                 <tr>
                     <td>
-                        <div><b>תאריך</b> - {{ shift.date|date:"d-m-Y" }}</div>
-                        <div><b>יום</b> - {{ shift.day }}</div>
-                        <div><b>סוג משמרת</b> - {{ shift.type_of_shift }}</div>
-                        <div><b>לקוח</b> - {{ shift.client }}</div>
-                        <div><b>זמן התחלה</b> - {{ shift.beginning_time }}</div>
-                        <div><b>מיקום</b> - {{ shift.location }}</div>
-                        <div><b>מספר עובדים</b> - {{ shift.num_of_employees }}</div>
+                        <div><b>תאריך</b> - {{ work_schedule_shift.date|date:"d-m-Y" }}</div>
+                        <div><b>יום</b> - {{ work_schedule_shift.day }}</div>
+                        <div><b>סוג משמרת</b> - {{ work_schedule_shift.type_of_shift }}</div>
+                        <div><b>לקוח</b> - {{ work_schedule_shift.client }}</div>
+                        <div><b>זמן התחלה</b> - {{ work_schedule_shift.beginning_time }}</div>
+                        <div><b>מיקום</b> - {{ work_schedule_shift.location }}</div>
+                        <div><b>מספר עובדים</b> - {{ work_schedule_shift.num_of_employees }}</div>
                         <div><b>שמות עובדים</b> - 
-                            {% for employee in shift.employees.all %}
+                            {% for employee in work_schedule_shift.employees.all %}
                                 {{ employee }}{% if not forloop.last %}, {% endif %} 
                             {% endfor %}
                         </div>
-                        {% if shift.notes %}
-                            <div style="color: red;"><b>הערות</b> - {{ shift.notes }}</div>
+                        {% if work_schedule_shift.notes %}
+                            <div style="color: red;"><b>הערות</b> - {{ work_schedule_shift.notes }}</div>
                         {% endif %}
-                        {% if connected_employee not in shift.employees.all and shift.employees.count < shift.num_of_employees and not user.is_superuser %}
+                        {% if connected_employee not in work_schedule_shift.employees.all and work_schedule_shift.employees.count < work_schedule_shift.num_of_employees and not user.is_superuser %}
                         <form action="{% url 'register-for-shift' shift.id %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">הרשם למשמרת</button>
@@ -104,7 +104,6 @@
                             <form action="{% url 'start-shift' shift.id %}" method="POST" onsubmit="hideStartButton(this)">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary">התחל משמרת</button>
-                                {{ shift.shift_end_date_time}}
                             </form>
                         {% endif %}
 

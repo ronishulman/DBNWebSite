@@ -1,11 +1,13 @@
 from statistics import mode
 from django.db import models
+from site_base.models import WorkSchedule
 
 # Create your models here.
 class Shift(models.Model):
     first_name= models.CharField(max_length=30)
     last_name= models.CharField(max_length=30)
     employee_id = models.IntegerField(max_length=9)
+    work_schedule = models.ForeignKey(WorkSchedule, on_delete=models.CASCADE, related_name='shifts', null=True)
     shift_id = models.AutoField(primary_key=True)
     shift_start_date_time = models.DateTimeField(null=True)
     shift_end_date_time = models.DateTimeField(null=True)
