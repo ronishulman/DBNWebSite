@@ -16,6 +16,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 import json
 import pytz
+from django.db.models import Count, F, Q
 from clients.models import Client
 from .forms import WorkScheduleForm
 from django.utils import formats, timezone
@@ -36,6 +37,19 @@ def homepage(request):
         connected_employee = Employee.objects.get(id = request.user.id)
         connected_employees_shifts = Shift.objects.filter(employee_id = connected_employee.id )
         existing_shift_ids = {shift.work_schedule.id for shift in connected_employees_shifts}
+
+        filter_option = request.GET.get('filter_option', 'all_shifts')
+
+        if filter_option == 'משמרות שלי':
+            work_schedule_list = work_schedule_list.filter(employees=connected_employee)
+            return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
+        
+        elif filter_option == 'משמרות פנויות':
+            work_schedule_list = work_schedule_list.annotate(
+                current_emp_count=Count('employees')
+            ).filter(current_emp_count__lt=F('num_of_employees')).exclude(employees=connected_employee)
+            return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
+        
         return render(request,"site_base/homepage.html",{'work_schedule_list': work_schedule_list, 'user': request.user, 'connected_employee': connected_employee,  'connected_employees_shifts': connected_employees_shifts, 'existing_shift_ids': existing_shift_ids})
 
 @login_required
