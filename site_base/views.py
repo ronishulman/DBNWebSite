@@ -171,7 +171,7 @@ def clients_info(request):
 def employee_details(request, id):
     user = request.user
     required_employee = Employee.objects.get(id = id)
-    user_shifts = Shift.objects.filter(employee_id = request.user.id)
+    user_shifts = Shift.objects.filter(employee_id = id)
     shift_durations = []
 
     # format the durations to string
@@ -185,7 +185,7 @@ def employee_details(request, id):
 
         shift_duration = f"{integer_part} {'שעה' if integer_part == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
         shift_durations.append(shift_duration)
-        
+
     print("All Shift Durations:", shift_durations)
     calculate_employees_details(required_employee)
 
