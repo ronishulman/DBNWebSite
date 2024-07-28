@@ -125,13 +125,15 @@ def calculate_shift_time(request, id):
 
     shift_start_date_time = shift.shift_start_date_time
     shift_end_date_time = shift.shift_end_date_time
+
     duration_hours = (shift_end_date_time - shift_start_date_time).total_seconds() / 3600
 
     integer_part = int(duration_hours)
     decimal_part = duration_hours - integer_part
+
     minutes = int(decimal_part * 60)
 
-    combined_number = float(str(integer_part) + '.' + str(int(minutes)))
+    combined_number = float(f"{integer_part}.{minutes:02d}")
 
     shift.length_of_the_shift = combined_number
     
