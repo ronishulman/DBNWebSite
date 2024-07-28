@@ -76,11 +76,11 @@ def my_shifts(request):
         _month = request.POST['month']
         _year = request.POST['year']
  
-        user_shifts = Shift.objects.filter(employee_id = user_id, shift_start_date_time__month =_month).order_by("-shift_id")
+        user_shifts = Shift.objects.filter(employee_id = user_id, shift_start_date_time__month =_month).order_by("-shift_start_date_time") 
         context = {"data": user_shifts , 'user': user}
         return render(request, "site_base/myshifts.html",context)
 
-    user_shifts = Shift.objects.filter(employee_id = user_id).order_by("-shift_id")
+    user_shifts = Shift.objects.filter(employee_id = user_id).order_by("-shift_start_date_time") 
     context = {"data": user_shifts , 'user': user}
     return render(request, "site_base/myshifts.html",context)
 
