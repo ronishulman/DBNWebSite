@@ -203,7 +203,7 @@ def employee_details(request, id):
             context = {'required_employee': required_employee, 'data':user_shifts, 'user': user, 'shift_durations': shift_durations}
             return render(request,"site_base/employeedetails.html",context) 
         
-    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': user}) 
+    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':user_shifts, 'user': user}) 
 
 @login_required
 def client_details(request):

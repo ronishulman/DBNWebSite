@@ -132,14 +132,14 @@
         <tbody>
           {% for shift in data %}
             <tr>
-              <td>{{shift.shift_start_date_time|date:'j.n.Y'}}</td>
-              <td>{{shift.shift_end_date_time|date:'j.n.Y'}}</td>
+              <td>{{ shift.shift_start_date_time|date:'j.n.Y'}}</td>
+              <td>{{ shift.shift_end_date_time|date:'j.n.Y'}}</td>
               <td>{{ shift.client}}</td>
               <td>{{ shift.location}}</td>
               <td>{{ shift.type_of_shift}}</td>
               <td>{{ shift.shift_pay|floatformat:2}}</td>
-              <td>{{shift.shift_start_date_time|time:'H:i'}}</td>
-              <td>{{shift.shift_end_date_time|time:'H:i'}}</td>
+              <td>{{ shift.shift_start_date_time|time:'H:i'}}</td>
+              <td>{{ shift.shift_end_date_time|time:'H:i'}}</td>
               <td>{{ shift_durations|slice:forloop.counter0 }}</td>
               <td>{{ shift.amount_of_km|default:0}}</td>
               <td>{{ shift.public_transport|default:0}}</td>
@@ -151,7 +151,7 @@
         </tbody>
       </table>
     </form>
-
+    <p>Shift Durations: {{ shift_durations }}</p>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script>
     function UpdateHourlyWage(employee_id){
