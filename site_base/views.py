@@ -170,32 +170,52 @@ def clients_info(request):
 @login_required
 def employee_details(request, id):
     user = request.user
-    required_employee = Employee.objects.get(id = id)
-    user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
-    shift_durations = []
 
-    if user_shifts:
-        for shift in user_shifts:
-            duration = shift.length_of_the_shift 
-            
-            shift_duration = format_duration(duration)
-            shift_durations.append(shift_duration)
+    required_employee = Employee.objects.get(id = id)
 
     calculate_employees_details(required_employee)
     salary = calulate_salary(request)
+
+    user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
+
+    now = datetime.now()
+    current_month = now.month
+    current_year = now.year
+
+    user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
+    shift_durations = []
 
     if request.method == "POST":
         _month = request.POST.get('month')
         _year = request.POST.get('year')
         
-        if not _month or not _year:
-            user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
-            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'paired_shifts': zip(user_shifts, shift_durations)}
-            return render(request,"site_base/employeedetails.html",context)   
+        if _month or _year:
+            user_shifts = Shift.objects.filter(
+                employee_id=id, 
+                shift_start_date_time__month=_month, 
+                shift_start_date_time__year=_year
+            ).order_by("-shift_start_date_time")
         else:
-            user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_start_date_time") 
-            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'paired_shifts': zip(user_shifts, shift_durations)}
-            return render(request,"site_base/employeedetails.html",context) 
+            user_shifts = Shift.objects.filter(
+                employee_id=id, 
+                shift_start_date_time__month=current_month, 
+                shift_start_date_time__year=current_year
+            ).order_by("-shift_start_date_time")
+
+        for shift in user_shifts:
+            duration = shift.length_of_the_shift 
+
+            shift_duration = format_duration(duration)
+            shift_durations.append(shift_duration)
+
+    context = {
+        'required_employee': required_employee,
+        'data': user_shifts,
+        'salary': salary,
+        'paired_shifts': zip(user_shifts, shift_durations),
+    }
+
+    return render(request, "site_base/employeedetails.html", context)
 
 @login_required
 def client_details(request):
