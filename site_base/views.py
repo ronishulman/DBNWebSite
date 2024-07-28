@@ -174,22 +174,23 @@ def employee_details(request, id):
     user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
     shift_durations = []
 
-    # format the durations to string
-    for shift in user_shifts:
+    if user_shifts:
+        # format the durations to string
+        for shift in user_shifts:
 
-        duration_hours = shift.length_of_the_shift
-            
-        integer_part = int(duration_hours)
-        decimal_part = duration_hours - integer_part
-        minutes = int(decimal_part * 60)
+            duration = shift.length_of_the_shift
+                
+            hours  = int(duration)
+            minutes = round((duration - hours) * 100)
 
-        shift_duration = f"{integer_part} {'שעה' if integer_part == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
-        shift_durations.append(shift_duration)
+            shift_duration = f"{hours} {'שעה' if hours == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
+            shift_durations.append(shift_duration)
 
     print("All Shift Durations:", shift_durations)
     calculate_employees_details(required_employee)
 
     if request.method == "POST":
+        print("im in the if")
         _month = request.POST.get('month')
         _year = request.POST.get('year')
         
