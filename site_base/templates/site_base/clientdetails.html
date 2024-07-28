@@ -90,7 +90,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for shift in data %}
+          {% for shift, duration in data|zip:shift_durations %}
             <tr class="clickable-row">
               <td>{{shift.shift_start_date_time|date:'j.n.Y'}}</td>
               <td>{{ shift.location}}</td>
@@ -104,7 +104,7 @@
                     <li><strong>שעת התחלה:</strong> {{shift.shift_start_date_time|time:'H:i'}}</li>
                     <li><strong>שעת סיום:</strong> {{shift.shift_end_date_time|time:'H:i'}}</li>
                     <li><strong>סוג משמרת:</strong> {{shift.type_of_shift}}</li>
-                    <li><strong>אורך המשמרת:</strong> {{shift.length_of_the_shift|floatformat:"3" }}</li>
+                    <li><strong>אורך המשמרת:</strong> {{duration }}</li>
                     <li><strong>מיקום:</strong> {{shift.location}}</li>
                     <li><strong>קילומטראז:</strong> {{shift.amount_of_km|default:"0"}}</li>
                     <li><strong>תחבורה ציבורית:</strong> {{shift.public_transport|default:"0"}}</li>
