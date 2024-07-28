@@ -199,20 +199,36 @@ def employee_details(request, id):
 
 @login_required
 def client_details(request):
-     user = request.user
-     if request.method == "POST":
+    user = request.user
+    shift_durations = []
+
+    if request.method == "POST":
         client_name = request.POST['client_name']
         _month = request.POST.get('month')
         _year = request.POST.get('year')
 
         if not _month or not _year:
-            client_shifts = Shift.objects.filter(client = client_name).order_by("-shift_id")
-            context = {'data':client_shifts, 'clinet_name': client_name, 'user': user}
-            return render(request,"site_base/clientdetails.html",context)   
+            client_shifts = Shift.objects.filter(client = client_name).order_by("-shift_start_date_time") 
         else:
-            client_shifts = Shift.objects.filter(client = client_name, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
-            context = {'data':client_shifts, 'clinet_name': client_name, 'user': user}
-            return render(request,"site_base/clientdetails.html",context)
+            client_shifts = Shift.objects.filter(
+                client = client_name,
+                shift_start_date_time__month =_month,
+                shift_start_date_time__year =_year ).order_by("-shift_start_date_time") 
+            
+        for shift in client_shifts:
+            duration = shift.length_of_the_shift 
+            shift_duration = format_duration(duration) 
+            shift_durations.append(shift_duration)
+
+        context = {
+            'data': client_shifts,
+            'client_name': client_name,
+            'user': user,
+            'shift_durations': shift_durations, 
+        }
+
+        return render(request, "site_base/clientdetails.html", context)
+        
         
 @login_required
 def employees_permits(request):
