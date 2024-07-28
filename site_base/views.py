@@ -71,18 +71,34 @@ def sign_in_page(request):
 @login_required
 def my_shifts(request):
     user = request.user
-    user_id = request.user.id
-    if request.method == "POST":
-        _month = request.POST['month']
-        _year = request.POST['year']
- 
-        user_shifts = Shift.objects.filter(employee_id = user_id, shift_start_date_time__month =_month).order_by("-shift_start_date_time") 
-        context = {"data": user_shifts , 'user': user}
-        return render(request, "site_base/myshifts.html",context)
+    user_id = user.id
+    now = datetime.now()
 
-    user_shifts = Shift.objects.filter(employee_id = user_id).order_by("-shift_start_date_time") 
-    context = {"data": user_shifts , 'user': user}
-    return render(request, "site_base/myshifts.html",context)
+    current_month = now.month
+    current_year = now.year
+
+    if request.method == "POST":
+        _month = request.POST.get('month', current_month)
+        _year = request.POST.get('year', current_year) 
+
+        user_shifts = Shift.objects.filter(
+            employee_id=user_id,
+            shift_start_date_time__month=_month,
+            shift_start_date_time__year=_year
+        ).order_by("-shift_start_date_time")
+    else:
+        user_shifts = Shift.objects.filter(
+            employee_id=user_id,
+            shift_start_date_time__month=current_month,
+            shift_start_date_time__year=current_year
+        ).order_by("-shift_start_date_time")
+
+    context = {
+        "data": user_shifts,
+        'user': user,
+    }
+
+    return render(request, "site_base/myshifts.html", context)
 
 @login_required
 def land_page(request):
@@ -174,7 +190,7 @@ def employee_details(request, id):
     required_employee = Employee.objects.get(id = id)
 
     calculate_employees_details(required_employee)
-    salary = calulate_salary(request)
+    salary = calculate_salary(request)
 
     user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
 
@@ -249,8 +265,7 @@ def client_details(request):
         }
 
         return render(request, "site_base/clientdetails.html", context)
-        
-        
+             
 @login_required
 def employees_permits(request):
     user = request.user
@@ -296,13 +311,21 @@ def update_hourly_wage(request):
     return JsonResponse({'success': False})
 
 @login_required
-def calulate_salary(request):
-    all_shifts = Shift.objects.all()
+def calculate_salary(request):
+    now = datetime.now()
+    current_month = now.month
+    current_year = now.year
+    
     salary = 0
 
-    for shift in all_shifts:
-        if shift.employee_id == request.user.id:
-            salary += shift.shift_pay
+    current_month_shifts = Shift.objects.filter(
+        employee_id=request.user.id,
+        shift_start_date_time__month=current_month,
+        shift_start_date_time__year=current_year
+    )
+
+    for shift in current_month_shifts:
+        salary += shift.shift_pay
 
     return salary
 
