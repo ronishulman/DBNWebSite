@@ -175,36 +175,27 @@ def employee_details(request, id):
     shift_durations = []
 
     if user_shifts:
-        # format the durations to string
         for shift in user_shifts:
-
-            duration = shift.length_of_the_shift
-                
-            hours  = int(duration)
-            minutes = round((duration - hours) * 100)
-
-            shift_duration = f"{hours} {'שעה' if hours == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
+            duration = shift.length_of_the_shift 
+            
+            shift_duration = format_duration(duration)
             shift_durations.append(shift_duration)
 
-    print("All Shift Durations:", shift_durations)
     calculate_employees_details(required_employee)
+    salary = calulate_salary(request)
 
     if request.method == "POST":
-        print("im in the if")
         _month = request.POST.get('month')
         _year = request.POST.get('year')
         
         if not _month or not _year:
             user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_start_date_time") 
-            salary = calulate_salary(request)
-            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'shift_durations': shift_durations, 'paired_shifts': zip(user_shifts, shift_durations)}
+            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'paired_shifts': zip(user_shifts, shift_durations)}
             return render(request,"site_base/employeedetails.html",context)   
         else:
             user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_start_date_time") 
-            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user, 'shift_durations': shift_durations, 'paired_shifts': zip(user_shifts, shift_durations)}
+            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'paired_shifts': zip(user_shifts, shift_durations)}
             return render(request,"site_base/employeedetails.html",context) 
-        
-    return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':user_shifts, 'user': user}) 
 
 @login_required
 def client_details(request):
@@ -499,3 +490,11 @@ def update_messages_page(request):
         ).order_by('-created_at')
 
     return render(request, "site_base/updatespage.html", {'messages': messages })
+
+def format_duration(duration):
+    hours = int(duration) 
+    minutes = round((duration - hours) * 100)
+
+    shift_duration = f"{hours} {'שעה' if hours == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
+    
+    return shift_duration
