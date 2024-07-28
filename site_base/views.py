@@ -172,20 +172,35 @@ def employee_details(request, id):
     user = request.user
     required_employee = Employee.objects.get(id = id)
     connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
+    shift_durations = []
+
+    # format the durations to string
+    for shift in user_shifts:
+
+        duration_hours = shift.length_of_the_shift
+            
+        integer_part = int(duration_hours)
+        decimal_part = duration_hours - integer_part
+        minutes = int(decimal_part * 60)
+
+        shift_duration = f"{integer_part} {'שעה' if integer_part == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
+            
+        shift_durations.append(shift_duration)
+
     calculate_employees_details(required_employee)
+
     if request.method == "POST":
-        print("im in if statement")
         _month = request.POST.get('month')
         _year = request.POST.get('year')
         
         if not _month or not _year:
             user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_id")
             salary = calulate_salary(request)
-            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary}
+            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'shift_durations': shift_durations}
             return render(request,"site_base/employeedetails.html",context)   
         else:
             user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
-            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user}
+            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user, 'shift_durations': shift_durations}
             return render(request,"site_base/employeedetails.html",context) 
         
     return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':connected_user_shifts, 'user': user}) 
