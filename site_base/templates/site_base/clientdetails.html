@@ -90,7 +90,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for shift, duration in data|zip:shift_durations %}
+          {% for shift, duration in paired_shift_durations %}
             <tr class="clickable-row">
               <td>{{shift.shift_start_date_time|date:'j.n.Y'}}</td>
               <td>{{ shift.location}}</td>

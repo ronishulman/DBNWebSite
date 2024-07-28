@@ -220,11 +220,12 @@ def client_details(request):
             shift_duration = format_duration(duration) 
             shift_durations.append(shift_duration)
 
+        paired_shift_durations = zip(client_shifts, shift_durations)
+
         context = {
-            'data': client_shifts,
+            'paired_shift_durations': paired_shift_durations,
             'client_name': client_name,
             'user': user,
-            'shift_durations': shift_durations, 
         }
 
         return render(request, "site_base/clientdetails.html", context)
