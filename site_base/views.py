@@ -184,9 +184,9 @@ def employee_details(request, id):
         minutes = int(decimal_part * 60)
 
         shift_duration = f"{integer_part} {'שעה' if integer_part == 1 else 'שעות'} {minutes} {'דקה' if minutes == 1 else 'דקות'}"
-            
         shift_durations.append(shift_duration)
-
+        
+    print("All Shift Durations:", shift_durations)
     calculate_employees_details(required_employee)
 
     if request.method == "POST":
