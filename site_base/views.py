@@ -171,7 +171,7 @@ def clients_info(request):
 def employee_details(request, id):
     user = request.user
     required_employee = Employee.objects.get(id = id)
-    connected_user_shifts = Shift.objects.filter(employee_id = request.user.id)
+    user_shifts = Shift.objects.filter(employee_id = request.user.id)
     shift_durations = []
 
     # format the durations to string
