@@ -196,11 +196,11 @@ def employee_details(request, id):
         if not _month or not _year:
             user_shifts = Shift.objects.filter(employee_id = id).order_by("-shift_id")
             salary = calulate_salary(request)
-            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'shift_durations': shift_durations}
+            context = {'required_employee': required_employee, 'data':user_shifts,'salary': salary, 'shift_durations': shift_durations, 'paired_shifts': zip(user_shifts, shift_durations)}
             return render(request,"site_base/employeedetails.html",context)   
         else:
             user_shifts = Shift.objects.filter(employee_id = id, shift_start_date_time__month =_month, shift_start_date_time__year =_year ).order_by("-shift_id")
-            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user, 'shift_durations': shift_durations}
+            context = {'required_employee': required_employee, 'data':user_shifts, 'user': user, 'shift_durations': shift_durations, 'paired_shifts': zip(user_shifts, shift_durations)}
             return render(request,"site_base/employeedetails.html",context) 
         
     return render(request,"site_base/employeedetails.html",{'required_employee': required_employee, 'data':user_shifts, 'user': user}) 
