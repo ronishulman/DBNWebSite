@@ -84,7 +84,7 @@
                     <input type="hidden" name="client_name" value="{{ client.name }}">
                     <button type="submit" class="btn btn-link client-button">{{ client.name }}</button>
                   </form>
-                <td style="display: flex; justify-content: flex-start; padding-left: 0;"> 
+                <td style="text-align: left; padding-left: 0; margin: 0;">
                   <form action="deleteclient" method="POST" onsubmit="return confirm('האם את/ה בטוח כי ברצונך למחוק את הלקוח?');">
                     {% csrf_token %}
                     <input type="hidden" name="client_name" value="{{ client.name }}">
