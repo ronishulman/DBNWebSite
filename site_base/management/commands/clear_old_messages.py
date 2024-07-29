@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         today = timezone.now().date()
 
-        if today.weekday() == 6: 
+        if today.weekday() == 0: 
             one_week_ago = timezone.now() - timezone.timedelta(weeks=1)
             UpdateMessages.objects.filter(created_at__lt=one_week_ago).delete()
             self.stdout.write(self.style.SUCCESS(f'Successfully deleted last week update messages.'))
