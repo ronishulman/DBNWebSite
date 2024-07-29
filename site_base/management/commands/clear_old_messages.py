@@ -7,10 +7,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         one_week_ago = timezone.now() - timezone.timedelta(weeks=1)
-        # Print the cutoff date
+
         print(f"Clearing messages older than: {one_week_ago}")
 
-        # Debugging: Count before deletion
+
         count_before = UpdateMessages.objects.filter(created_at__lt=one_week_ago).count()
         print(f"Messages to delete: {count_before}")
 
