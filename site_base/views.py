@@ -433,45 +433,43 @@ def calculate_employees_details(employee):
     employee.save()
     return
 
-def aggregate_monthly_data(request):
-    if request.method == 'POST':
-        today = timezone.now().date()
-        if today.day != 22:
-            return HttpResponse('This function can only be run on the first day of the month.', status=400)
+def aggregate_monthly_data():
+    today = timezone.now().date()
 
-        current_month = today.replace(day=1)
-        employees = Employee.objects.all()
+    if today.day != 29:
+        print('This function can only be run on the first day of the month.')
+        return  # Exit if it is not the first day
 
-        for employee in employees:
-            salary = employee.salary
-            total_km = employee.total_km
-            total_transport = employee.total_transport
-            total_food = employee.total_food
-            total_parking = employee.total_parking
+    current_month = today.replace(day=1)
+    employees = Employee.objects.all()
 
-            EmployeeMonthlyData.objects.update_or_create(
-                employee=employee,
-                month=current_month,
-                defaults={
-                    'salary': salary,
-                    'total_km': total_km,
-                    'total_transport': total_transport,
-                    'total_food': total_food,
-                    'total_parking': total_parking,
-                }
-            )
+    for employee in employees:
+        salary = employee.salary
+        total_km = employee.total_km
+        total_transport = employee.total_transport
+        total_food = employee.total_food
+        total_parking = employee.total_parking
 
-            # Reset the employee's data for the new month
-            employee.salary = 0
-            employee.total_km = 0
-            employee.total_transport = 0
-            employee.total_food = 0
-            employee.total_parking = 0
-            employee.save()
+        EmployeeMonthlyData.objects.update_or_create(
+            employee=employee,
+            month=current_month,
+            defaults={
+                'salary': salary,
+                'total_km': total_km,
+                'total_transport': total_transport,
+                'total_food': total_food,
+                'total_parking': total_parking,
+            }
+        )
 
-        return employees_shifts(request)
+        employee.salary = 0
+        employee.total_km = 0
+        employee.total_transport = 0
+        employee.total_food = 0
+        employee.total_parking = 0
+        employee.save()
 
-    return HttpResponse('Invalid request method.', status=405)
+    print('Successfully aggregated monthly data for all employees.')  # For debugging
 
 def Employee_Monthly_Data_Detail(request,id):
 

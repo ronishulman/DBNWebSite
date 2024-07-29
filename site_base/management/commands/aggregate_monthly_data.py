@@ -13,9 +13,5 @@ class Command(BaseCommand):
         print(f"Aggregate Monthly Data command triggered on {today}.")
 
         if today.day == 29:
-
-            request = None 
-            aggregate_monthly_data(request)
-            self.stdout.write(self.style.SUCCESS('Successfully aggregated monthly data.'))
-        else:
-            self.stdout.write(self.style.WARNING('Today is not the first day of the month. Skipping aggregation.'))
+            aggregate_monthly_data()
+            self.stdout.write(self.style.SUCCESS('Aggregate monthly data command executed.'))
