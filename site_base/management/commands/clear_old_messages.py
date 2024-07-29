@@ -6,9 +6,14 @@ class Command(BaseCommand):
     help = 'Clear old update messages that are older than a week.'
 
     def handle(self, *args, **options):
-        today = timezone.now().date()
-        print("im in the handle")
-        if today.weekday() == 0: 
-            one_week_ago = timezone.now() - timezone.timedelta(weeks=1)
-            UpdateMessages.objects.filter(created_at__lt=one_week_ago).delete()
-            self.stdout.write(self.style.SUCCESS(f'Successfully deleted last week update messages.'))
+        one_week_ago = timezone.now() - timezone.timedelta(weeks=1)
+        # Print the cutoff date
+        print(f"Clearing messages older than: {one_week_ago}")
+
+        # Debugging: Count before deletion
+        count_before = UpdateMessages.objects.filter(created_at__lt=one_week_ago).count()
+        print(f"Messages to delete: {count_before}")
+
+        deleted_count, _ = UpdateMessages.objects.filter(created_at__lt=one_week_ago).delete()
+        
+        self.stdout.write(self.style.SUCCESS(f'Successfully deleted {deleted_count} old update messages.'))
