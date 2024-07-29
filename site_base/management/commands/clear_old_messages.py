@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         today = timezone.now().date()
-
+        print("im in the handle")
         if today.weekday() == 0: 
             one_week_ago = timezone.now() - timezone.timedelta(weeks=1)
             UpdateMessages.objects.filter(created_at__lt=one_week_ago).delete()
