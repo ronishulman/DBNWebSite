@@ -436,7 +436,7 @@ def calculate_employees_details(employee):
 def aggregate_monthly_data():
     today = timezone.now().date()
 
-    if today.day != 29:
+    if today.day != 1:
         print('This function can only be run on the first day of the month.')
         return  # Exit if it is not the first day
 

@@ -12,6 +12,6 @@ class Command(BaseCommand):
         
         print(f"Aggregate Monthly Data command triggered on {today}.")
 
-        if today.day == 29:
+        if today.day == 1:
             aggregate_monthly_data()
             self.stdout.write(self.style.SUCCESS('Aggregate monthly data command executed.'))
