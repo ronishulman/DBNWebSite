@@ -14,6 +14,5 @@ class Command(BaseCommand):
         count_before = UpdateMessages.objects.filter(created_at__lt=one_week_ago).count()
         print(f"Messages to delete: {count_before}")
 
-        deleted_count, _ = UpdateMessages.objects.filter(created_at__lt=one_week_ago).delete()
+        UpdateMessages.objects.filter(created_at__lt=one_week_ago).delete()
         
-        self.stdout.write(self.style.SUCCESS(f'Successfully deleted {deleted_count} old update messages.'))
