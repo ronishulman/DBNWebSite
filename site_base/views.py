@@ -38,7 +38,7 @@ def homepage(request):
     else:
         connected_employee = Employee.objects.get(id = request.user.id)
         connected_employees_shifts = Shift.objects.filter(employee_id = connected_employee.id )
-        existing_shift_ids = {shift.work_schedule.id for shift in connected_employees_shifts}
+        existing_shift_ids = {shift.work_schedule.id for shift in connected_employees_shifts if shift.work_schedule}
 
         filter_option = request.GET.get('filter_option', 'all_shifts')
 
